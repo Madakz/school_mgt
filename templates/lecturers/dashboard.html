@@ -1,0 +1,85 @@
+{% extends '../lecturer_base.html' %}
+{% block content %}
+<div class="container mt-5">
+  <h2 class="mb-4 text-primary">Welcome, {{ lecturer.user.get_full_name }}</h2>
+
+  <div class="row text-center">
+    <div class="col-md-3 mb-3">
+      <div class="card shadow-sm border-primary">
+        <div class="card-body">
+          <h5 class="card-title">Assigned Courses</h5>
+          <h3 class="text-primary">{{ total_courses }}</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+      <div class="card shadow-sm border-success">
+        <div class="card-body">
+          <h5 class="card-title">Students</h5>
+          <h3 class="text-success">{{ total_students }}</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+      <div class="card shadow-sm border-info">
+        <div class="card-body">
+          <h5 class="card-title">Approved Results</h5>
+          <h3 class="text-info">{{ approved_results }}</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+      <div class="card shadow-sm border-warning">
+        <div class="card-body">
+          <h5 class="card-title">Pending Results</h5>
+          <h3 class="text-warning">{{ pending_results }}</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pie Chart Section -->
+  <div class="mt-5 text-center">
+    <h4 class="text-secondary mb-3">Results Status Overview</h4>
+    <div style="width: 400px; margin: auto;">
+      <canvas id="resultsChart"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const ctx = document.getElementById('resultsChart').getContext('2d');
+  const resultsChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: ['Approved ({{ approved_percent }}%)', 'Pending ({{ pending_percent }}%)'],
+      datasets: [{
+        data: [{{ approved_results }}, {{ pending_results }}],
+        backgroundColor: ['#28a745', '#ffc107'],
+        borderColor: ['#fff', '#fff'],
+        borderWidth: 2,
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'bottom'
+        },
+        title: {
+          display: true,
+          text: 'Approved vs Pending Results',
+          font: {
+            size: 16
+          }
+        }
+      }
+    }
+  });
+</script>
+{% endblock %}

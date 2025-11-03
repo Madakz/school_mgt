@@ -1,0 +1,62 @@
+{% extends "../student_base.html" %}
+{% block content %}
+<div class="container mt-5">
+  <div class="card shadow p-4">
+    <h3 class="text-primary mb-4">My Course Results</h3>
+
+    {% if results_grouped %}
+      {% for key, data in results_grouped.items %}
+        <h5 class="mt-4 text-success">{{ key }}</h5>
+        <table class="table table-bordered table-striped align-middle">
+          <thead class="table-dark">
+            <tr>
+              <th>Course Code</th>
+              <th>Course Title</th>
+              <th>Credit Unit</th>
+              <th>Score</th>
+              <th>Grade</th>
+              <th>Status</th>
+              <th>Lecturer</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for r in data.results %}
+            <tr>
+              <td>{{ r.course.code }}</td>
+              <td>{{ r.course.title }}</td>
+              <td>{{ r.course.credit_unit }}</td>
+              <td>{{ r.score|default:"-" }}</td>
+              <td>{{ r.grade|default:"-" }}</td>
+              <td>
+                {% if r.status == "Approved" %}
+                  <span class="badge bg-success">Approved</span>
+                {% else %}
+                  <span class="badge bg-warning text-dark">{{ r.status }}</span>
+                {% endif %}
+              </td>
+              <td>{{ r.lecturer }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+        <div class="text-end mb-4">
+          <strong>Semester GPA:</strong> {{ data.gpa }}
+        </div>
+      {% endfor %}
+
+      <hr>
+      <div class="text-end mt-3">
+        <h5><strong>Cumulative GPA (CGPA):</strong> {{ cgpa }}</h5>
+      </div>
+
+    {% else %}
+      <p class="text-center text-muted">No course results available yet.</p>
+    {% endif %}
+
+    <div class="text-end mt-3">
+      <a href="{% url 'student_dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

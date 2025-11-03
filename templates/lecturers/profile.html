@@ -1,0 +1,34 @@
+{% extends "lecturer_base.html" %}
+{% block content %}
+<div class="container mt-4">
+  <div class="card shadow-sm p-4">
+    <h3 class="mb-3 text-primary">Lecturer Profile</h3>
+    <table class="table table-bordered">
+      <tr>
+        <th>Full Name</th>
+        <td>{{ lecturer.user.get_full_name }}</td>
+      </tr>
+      <tr>
+        <th>Username</th>
+        <td>{{ lecturer.user.username }}</td>
+      </tr>
+      <tr>
+        <th>Email</th>
+        <td>{{ lecturer.user.email }}</td>
+      </tr>
+      <tr>
+        <th>Department</th>
+        <td>{{ lecturer.department.name }}</td>
+      </tr>
+      <tr>
+        <th>Staff ID</th>
+        <td>{{ lecturer.staff_id }}</td>
+      </tr>
+      <tr>
+        <th>Rank</th>
+        <td>{{ lecturer.rank }}</td>
+      </tr>
+    </table>
+  </div>
+</div>
+{% endblock %}

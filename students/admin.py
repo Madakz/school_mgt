@@ -3,7 +3,7 @@ from .models import Student, CourseRegistration, Result
 
 @admin.register(Student)
 class StudentAdmin(admin.ModelAdmin):
-    list_display = ('matric_no', 'user', 'department', 'level', 'date_joined')
+    list_display = ('matric_no', 'user', 'department', 'level', 'admission_year')
     list_filter = ('department', 'level')
     search_fields = ('matric_no', 'user__username', 'user__first_name', 'user__last_name')
 

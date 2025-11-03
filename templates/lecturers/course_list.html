@@ -1,0 +1,45 @@
+{% extends "lecturer_base.html" %}
+{% block content %}
+<div class="container mt-4">
+  <h3 class="text-primary mb-3">My Assigned Courses</h3>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Code</th>
+        <th>Title</th>
+        <th>Department</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for course in courses %}
+        <tr>
+          <td>{{ course.code }}</td>
+          <td>{{ course.title }}</td>
+          <td>{{ course.department.name }}</td>
+          <td>
+            {% if course.result_status == 'none' %}
+              <a href="{% url 'submit_results' course.id %}" class="btn btn-sm btn-primary">
+                Submit Results
+              </a>
+            {% elif course.result_status == 'partial' %}
+              <a href="{% url 'submit_results' course.id %}" class="btn btn-sm btn-warning text-dark">
+                Continue Submitting
+              </a>
+            {% elif course.result_status == 'full' %}
+              <a href="{% url 'view_results' course.id %}" class="btn btn-sm btn-secondary">
+                View Results
+              </a>
+            {% endif %}
+          </td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="4" class="text-center">No assigned courses.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

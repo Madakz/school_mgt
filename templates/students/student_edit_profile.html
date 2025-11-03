@@ -1,0 +1,32 @@
+{% extends "../student_base.html" %}
+{% block content %}
+<div class="container mt-5">
+  <div class="card shadow p-4">
+    <h3 class="text-primary mb-4">Edit My Profile</h3>
+
+    <form method="post">
+      {% csrf_token %}
+      <div class="mb-3">
+        <label for="id_first_name" class="form-label">First Name</label>
+        {{ form.first_name }}
+      </div>
+      <div class="mb-3">
+        <label for="id_last_name" class="form-label">Last Name</label>
+        {{ form.last_name }}
+      </div>
+      <div class="mb-3">
+        <label for="id_username" class="form-label">Username</label>
+        {{ form.username }}
+      </div>
+      <div class="mb-3">
+        <label for="id_password" class="form-label">New Password</label>
+        {{ form.password }}
+        <small class="text-muted d-block">Leave blank to keep current password</small>
+      </div>
+
+      <button type="submit" class="btn btn-success">Save Changes</button>
+      <a href="{% url 'student_profile' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+  </div>
+</div>
+{% endblock %}

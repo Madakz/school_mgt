@@ -1,0 +1,17 @@
+{% extends "../student_base.html" %}
+{% block content %}
+<div class="container mt-5">
+  <div class="card shadow p-4 text-center">
+    <h4 class="text-danger mb-3">Confirm Course Drop</h4>
+    <p>Are you sure you want to drop this course?</p>
+
+    <p><strong>{{ registration.course.code }} - {{ registration.course.title }}</strong></p>
+
+    <form method="POST">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger">Yes, Drop Course</button>
+      <a href="{% url 'view_registered_courses' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+  </div>
+</div>
+{% endblock %}

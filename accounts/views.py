@@ -3,6 +3,10 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms import LoginForm
 
+
+def home(request):
+    return render(request, 'home.html')
+
 def login_view(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
@@ -32,4 +36,5 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
+    messages.success(request, "You have been logged out successfully.")
     return redirect('login')

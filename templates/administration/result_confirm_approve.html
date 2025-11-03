@@ -1,0 +1,18 @@
+{% extends "admin_base.html" %}
+{% block content %}
+<h2>Approve Result</h2>
+<p>Are you sure you want to approve this result?</p>
+
+<p><strong>Student:</strong> {{ result.registration.student.user.get_full_name }}</p>
+<p><strong>Course:</strong> {{ result.registration.course.code }} - {{ result.registration.course.title }}</p>
+<p><strong>Score:</strong> {{ result.score }}</p>
+<p><strong>Grade:</strong> {{ result.grade }}</p>
+<p><strong>Status:</strong> {{ result.status }}</p>
+
+<form method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Approve Result</button>
+  <a href="{% url 'result_list' %}">Cancel</a>
+</form>
+{% endblock %}

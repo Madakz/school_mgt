@@ -1,0 +1,41 @@
+{% extends "../student_base.html" %}
+{% block content %}
+<div class="container mt-5">
+  <div class="card shadow p-4">
+    <h3 class="text-primary mb-4">My Registered Courses</h3>
+
+    {% if registrations %}
+    <table class="table table-striped align-middle">
+      <thead class="table-dark">
+        <tr>
+          <th>Course Code</th>
+          <th>Title</th>
+          <th>Credit Unit</th>
+          <th>Session</th>
+          <th>Semester</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for reg in registrations %}
+        <tr>
+          <td>{{ reg.course.code }}</td>
+          <td>{{ reg.course.title }}</td>
+          <td>{{ reg.course.credit_unit }}</td>
+          <td>{{ reg.session }}</td>
+          <td>{{ reg.semester }}</td>
+          <td>
+            <a href="{% url 'drop_course' reg.id %}" class="btn btn-sm btn-danger">
+              Drop
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p class="text-center text-muted">You have not registered any course yet.</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

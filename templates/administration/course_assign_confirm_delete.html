@@ -1,0 +1,10 @@
+{% extends "admin_base.html" %}
+{% block content %}
+<h2>Unassign Lecturer</h2>
+<p>Are you sure you want to unassign the lecturer from "{{ course.title }}"?</p>
+<form method="POST">
+  {% csrf_token %}
+  <button type="submit">Confirm</button>
+  <a href="{% url 'course_assignment_list' %}">Cancel</a>
+</form>
+{% endblock %}

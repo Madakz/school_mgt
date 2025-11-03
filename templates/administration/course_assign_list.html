@@ -1,0 +1,29 @@
+{% extends "../admin_base.html" %}
+{% block content %}
+<h2>Course Assignment List</h2>
+<table border="1" cellpadding="10">
+  <tr>
+    <th>Code</th>
+    <th>Title</th>
+    <th>Credit Unit</th>
+    <th>Department</th>
+    <th>Assigned Lecturer</th>
+    <th>Actions</th>
+  </tr>
+  {% for course in courses %}
+  <tr>
+    <td>{{ course.code }}</td>
+    <td>{{ course.title }}</td>
+    <td>{{ course.credit_unit }}</td>
+    <td>{{ course.department.name }}</td>
+    <td>{{ course.assigned_lecturer.user.get_full_name|default:"Not Assigned" }}</td>
+    <td>
+      <a href="{% url 'assign_course' course.id %}">Assign/Edit</a> |
+      {% if course.assigned_lecturer %}
+      <a href="{% url 'unassign_course' course.id %}">Unassign</a>
+      {% endif %}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

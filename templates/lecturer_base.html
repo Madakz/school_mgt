@@ -9,7 +9,13 @@
     <h1>School Management System</h1>
     <hr>
   </header>
-
+  <ul>
+    <a href="{% url 'lecturer_dashboard' %}">Dashboard</a>
+    <a href="{% url 'lecturer_profile' %}">Profile</a>  
+    <a href="{% url 'student_list' %}">Manage Students</a>
+    <a href="{% url 'lecturer_courses' %}">Assigned courses</a>
+    <a href="{% url 'logout' %}">Logout</a>
+  </ul>
   {% block content %}{% endblock %}
   
   <footer>

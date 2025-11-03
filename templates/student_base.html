@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}School Management{% endblock %}</title>
+</head>
+<body>
+  <header>
+    <h1>School Management System</h1>
+    <hr>
+  </header>
+  <ul>
+    <a href="{% url 'student_dashboard' %}">Dashboard</a>
+    <a href="{% url 'student_profile' %}">Profile</a>
+    <a href="{% url 'student_view_results' %}">View My Results</a>
+    <a href="{% url 'register_courses' %}">Course enrolment</a>
+    <a href="{% url 'view_registered_courses' %}">View My Registered Courses</a>
+    <a href="{% url 'logout' %}">Logout</a>
+  </ul>
+  {% block content %}
+  
+  {% endblock %}
+  
+  <footer>
+    <hr>
+    <p>&copy; {{ year }} School Management System</p>
+  </footer>
+</body>
+</html>

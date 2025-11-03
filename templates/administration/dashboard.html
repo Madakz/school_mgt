@@ -1,0 +1,145 @@
+{% extends '../admin_base.html' %}
+{% block content %}
+<div class="container mt-5">
+  <h2 class="mb-4 text-primary">Admin Dashboard</h2>
+  <h2>Admin List</h2>
+<a href="{% url 'admin_dashboard' %}">➕ Dashboard</a>
+<a href="{% url 'admin_create' %}">➕ Add New Admin</a>
+<a href="{% url 'lecturer_list' %}">➕ Manage Lecturers</a>
+<table border="1">
+  <tr>
+    <th>Username</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Role</th>
+    <th>Actions</th>
+  </tr>
+  {% for admin in admins %}
+  <tr>
+    <td>{{ admin.user.username }}</td>
+    <td>{{ admin.user.first_name }} {{ admin.user.last_name }}</td>
+    <td>{{ admin.user.email }}</td>
+    <td>{{ admin.role }}</td>
+    <td>
+      <a href="{% url 'admin_update' admin.id %}"> Edit</a> |
+      <a href="{% url 'admin_delete' admin.id %}"> Delete</a>
+    </td>
+  </tr>
+  {% empty %}
+  <tr><td colspan="5">No admins found.</td></tr>
+  {% endfor %}
+</table>
+  <!-- Summary Cards -->
+  <div class="row text-center mb-4">
+    <div class="col-md-3 mb-3">
+      <div class="card shadow-sm border-primary">
+        <div class="card-body">
+          <h5 class="card-title">Lecturers</h5>
+          <h3 class="text-primary">{{ total_lecturers }}</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+      <div class="card shadow-sm border-success">
+        <div class="card-body">
+          <h5 class="card-title">Students</h5>
+          <h3 class="text-success">{{ total_students }}</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+      <div class="card shadow-sm border-info">
+        <div class="card-body">
+          <h5 class="card-title">Courses</h5>
+          <h3 class="text-info">{{ total_courses }}</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+      <div class="card shadow-sm border-secondary">
+        <div class="card-body">
+          <h5 class="card-title">Admin Users</h5>
+          <h3 class="text-secondary">{{ admins.count }}</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charts Row -->
+  <div class="row mt-5">
+    <!-- Pie Chart -->
+    <div class="col-md-6 text-center mb-4">
+      <h5 class="text-secondary mb-3">Course Assignment Status</h5>
+      <canvas id="courseChart" width="400" height="400"></canvas>
+    </div>
+
+    <!-- Bar Chart -->
+    <div class="col-md-6 text-center mb-4">
+      <h5 class="text-secondary mb-3">Population Overview</h5>
+      <canvas id="populationChart" width="400" height="400"></canvas>
+    </div>
+  </div>
+  
+</div>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  // Pie Chart: Assigned vs Unassigned Courses
+  const ctx1 = document.getElementById('courseChart').getContext('2d');
+  new Chart(ctx1, {
+    type: 'pie',
+    data: {
+      labels: ['Assigned Courses', 'Unassigned Courses'],
+      datasets: [{
+        data: [{{ assigned_courses }}, {{ unassigned_courses }}],
+        backgroundColor: ['#28a745', '#dc3545'],
+        borderColor: '#fff',
+        borderWidth: 2
+      }]
+    },
+    options: {
+      plugins: {
+        legend: { position: 'bottom' },
+        title: {
+          display: true,
+          text: 'Assigned vs Unassigned Courses',
+          font: { size: 16 }
+        }
+      }
+    }
+  });
+
+  // Bar Chart: Student vs Lecturer Population
+  const ctx2 = document.getElementById('populationChart').getContext('2d');
+  new Chart(ctx2, {
+    type: 'bar',
+    data: {
+      labels: ['Students', 'Lecturers'],
+      datasets: [{
+        label: 'Population Count',
+        data: [{{ total_students }}, {{ total_lecturers }}],
+        backgroundColor: ['#007bff', '#ffc107'],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        title: {
+          display: true,
+          text: 'Lecturer vs Student Population',
+          font: { size: 16 }
+        }
+      },
+      scales: {
+        y: { beginAtZero: true }
+      }
+    }
+  });
+</script>
+{% endblock %}

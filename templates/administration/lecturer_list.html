@@ -1,0 +1,26 @@
+{% extends "../admin_base.html" %}
+{% block content %}
+<h2>Lecturers</h2>
+<a href="{% url 'lecturer_create' %}">Add Lecturer</a>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Staff ID</th>
+        <th>Department</th>
+        <th>Rank</th>
+        <th>Actions</th>
+    </tr>
+    {% for lecturer in lecturers %}
+    <tr>
+        <td>{{ lecturer.user.get_full_name }}</td>
+        <td>{{ lecturer.staff_id }}</td>
+        <td>{{ lecturer.department }}</td>
+        <td>{{ lecturer.rank }}</td>
+        <td>
+            <a href="{% url 'lecturer_update' lecturer.id %}">Edit</a> |
+            <a href="{% url 'lecturer_delete' lecturer.id %}">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
