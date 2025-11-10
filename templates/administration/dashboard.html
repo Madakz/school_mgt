@@ -1,89 +1,390 @@
 {% extends '../admin_base.html' %}
+{% load static %}
 {% block content %}
-<div class="container mt-5">
-  <h2 class="mb-4 text-primary">Admin Dashboard</h2>
-  <h2>Admin List</h2>
-<a href="{% url 'admin_dashboard' %}">➕ Dashboard</a>
-<a href="{% url 'admin_create' %}">➕ Add New Admin</a>
-<a href="{% url 'lecturer_list' %}">➕ Manage Lecturers</a>
-<table border="1">
-  <tr>
-    <th>Username</th>
-    <th>Name</th>
-    <th>Email</th>
-    <th>Role</th>
-    <th>Actions</th>
-  </tr>
-  {% for admin in admins %}
-  <tr>
-    <td>{{ admin.user.username }}</td>
-    <td>{{ admin.user.first_name }} {{ admin.user.last_name }}</td>
-    <td>{{ admin.user.email }}</td>
-    <td>{{ admin.role }}</td>
-    <td>
-      <a href="{% url 'admin_update' admin.id %}"> Edit</a> |
-      <a href="{% url 'admin_delete' admin.id %}"> Delete</a>
-    </td>
-  </tr>
-  {% empty %}
-  <tr><td colspan="5">No admins found.</td></tr>
-  {% endfor %}
-</table>
-  <!-- Summary Cards -->
-  <div class="row text-center mb-4">
-    <div class="col-md-3 mb-3">
-      <div class="card shadow-sm border-primary">
-        <div class="card-body">
-          <h5 class="card-title">Lecturers</h5>
-          <h3 class="text-primary">{{ total_lecturers }}</h3>
+    <!-- Dashboard summery Start Here -->
+    <div class="row gutters-20">
+        <div class="col-xl-3 col-sm-6 col-12">
+            <div class="dashboard-summery-one mg-b-20">
+                <div class="row align-items-center">
+                    <div class="col-6">
+                        <div class="item-icon bg-light-green ">
+                            <i class="flaticon-classmates text-green"></i>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="item-content">
+                            <div class="item-title">Students</div>
+                            <div class="item-number"><span class="counter" data-num="{{ total_students }}">{{ total_students }}</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
+        <div class="col-xl-3 col-sm-6 col-12">
+            <div class="dashboard-summery-one mg-b-20">
+                <div class="row align-items-center">
+                    <div class="col-6">
+                        <div class="item-icon bg-light-blue">
+                            <i class="flaticon-multiple-users-silhouette text-blue"></i>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="item-content">
+                            <div class="item-title">Lecturers</div>
+                            <div class="item-number"><span class="counter" data-num="{{ total_lecturers }}">{{ total_lecturers }}</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 col-12">
+            <div class="dashboard-summery-one mg-b-20">
+                <div class="row align-items-center">
+                    <div class="col-6">
+                        <div class="item-icon bg-light-yellow">
+                            <i class="flaticon-maths-class-materials-cross-of-a-pencil-and-a-ruler"></i>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="item-content">
+                            <div class="item-title">Courses</div>
+                            <div class="item-number"><span class="counter" data-num="{{ total_courses }}">{{ total_courses }}</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 col-12">
+            <div class="dashboard-summery-one mg-b-20">
+                <div class="row align-items-center">
+                    <div class="col-6">
+                        <div class="item-icon bg-light-red">
+                            <i class="flaticon-multiple-users-silhouette text-red"></i>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="item-content">
+                            <div class="item-title">HOD Admins</div>
+                            <div class="item-number"><span class="counter" data-num="{{ admins.count }}">{{ admins.count }}</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+    <!-- Dashboard summery End Here -->
 
-    <div class="col-md-3 mb-3">
-      <div class="card shadow-sm border-success">
-        <div class="card-body">
-          <h5 class="card-title">Students</h5>
-          <h3 class="text-success">{{ total_students }}</h3>
-        </div>
-      </div>
-    </div>
 
-    <div class="col-md-3 mb-3">
-      <div class="card shadow-sm border-info">
-        <div class="card-body">
-          <h5 class="card-title">Courses</h5>
-          <h3 class="text-info">{{ total_courses }}</h3>
-        </div>
-      </div>
-    </div>
 
-    <div class="col-md-3 mb-3">
-      <div class="card shadow-sm border-secondary">
-        <div class="card-body">
-          <h5 class="card-title">Admin Users</h5>
-          <h3 class="text-secondary">{{ admins.count }}</h3>
+
+    <div class="row">
+      <!-- Student Info Area Start Here -->
+      <div class="col-4-xxxl col-12">
+          <div class="card dashboard-card-ten">
+              <div class="card-body">
+                  <div class="heading-layout1">
+                      <div class="item-title">
+                          <h3>About Me</h3>
+                      </div>
+                      <div class="dropdown">
+                          <a class="dropdown-toggle" href="index3.html#" role="button" data-toggle="dropdown"
+                              aria-expanded="false">...</a>
+
+                          <div class="dropdown-menu dropdown-menu-right">
+                              <a class="dropdown-item" href="#"><i
+                                      class="fas fa-times text-orange-red"></i>Close</a>
+                              <a class="dropdown-item" href="#"><i
+                                      class="fas fa-cogs text-dark-pastel-green"></i>Edit</a>
+                              <a class="dropdown-item" href="#"><i
+                                      class="fas fa-redo-alt text-orange-peel"></i>Refresh</a>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="student-info">
+                      <div class="media media-none--xs">
+                          <div class="item-img">
+                              <img src="{% static 'img/figure/student1.png' %}" class="media-img-auto" alt="student">
+                          </div>
+                          <div class="media-body">
+                              <h3 class="item-title">{{user.first_name}} {{user.last_name}}</h3>
+                              
+                          </div>
+                      </div>
+                      <div class="table-responsive info-table">
+                          <table class="table text-nowrap">
+                              <tbody>
+                                  <tr>
+                                      <td>Name:</td>
+                                      <td class="font-medium text-dark-medium">{{user.first_name}} {{user.last_name}}</td>
+                                  </tr>                                 
+                                  <tr>
+                                      <td>E-Mail:</td>
+                                      <td class="font-medium text-dark-medium">{{user.email}}</td>
+                                  </tr>
+                                  <tr>
+                                      <td>Role:</td>
+                                      <td class="font-medium text-dark-medium">{{user.role}}</td>
+                                  </tr>
+                                  <tr>
+                                      <td>Last Login:</td>
+                                      <td class="font-medium text-dark-medium">{{user.last_login}}  </td>
+                                  </tr>
+                        
+                              </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Student Info Area End Here -->
+
+
+
+
+      <div class="col-8-xxxl col-12">
+        <div class="row">        
+
+
+          <!-- Exam Result Area Start Here -->
+          <div class="col-lg-12">
+            <div class="card dashboard-card-eleven">
+              <div class="card-body">
+                <div class="heading-layout1">
+                  <div class="item-title">
+                      <h3>All Admins/HOD</h3>
+                  </div>
+                  <div class="dropdown">
+                      <a class="dropdown-toggle" href="index3.html#" role="button" data-toggle="dropdown"
+                          aria-expanded="false">...</a>
+
+                      <div class="dropdown-menu dropdown-menu-right">
+                          <a class="dropdown-item" href="#"><i
+                                  class="fas fa-times text-orange-red"></i>Close</a>
+                          <a class="dropdown-item" href="#"><i
+                                  class="fas fa-cogs text-dark-pastel-green"></i>Edit</a>
+                          <a class="dropdown-item" href="#"><i
+                                  class="fas fa-redo-alt text-orange-peel"></i>Refresh</a>
+                      </div>
+                  </div>
+                </div>
+                <div class="table-box-wrap">
+                  <div class="table-responsive result-table-box">
+                    <table class="table display data-table text-nowrap">
+                      <thead>
+                        <tr>
+                          <th>Username</th>
+                          <th>Name</th>
+                          <th>Email</th>
+                          <th>Role</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for admin in admins %} 
+                        <tr>
+                          <td>{{ admin.user.username }}</td>
+                          <td>{{ admin.user.first_name }} {{ admin.user.last_name }}</td>
+                          <td>{{ admin.user.email }}</td>
+                          <td>{{ admin.role }}</td>
+                          <td>
+                            <a href="{% url 'admin_update' admin.id %}"> Edit</a> |
+                            <a href="{% url 'admin_delete' admin.id %}"> Delete</a>
+                          </td>
+                        </tr>
+                        {% empty %}
+                        <tr><td colspan="5">No admins found.</td></tr>
+                        {% endfor %}                                          
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Exam Result Area End Here -->
         </div>
       </div>
-    </div>
   </div>
 
-  <!-- Charts Row -->
-  <div class="row mt-5">
-    <!-- Pie Chart -->
-    <div class="col-md-6 text-center mb-4">
-      <h5 class="text-secondary mb-3">Course Assignment Status</h5>
-      <canvas id="courseChart" width="400" height="400"></canvas>
-    </div>
 
-    <!-- Bar Chart -->
-    <div class="col-md-6 text-center mb-4">
-      <h5 class="text-secondary mb-3">Population Overview</h5>
-      <canvas id="populationChart" width="400" height="400"></canvas>
-    </div>
+<!-- Dashboard Content Start Here -->
+  <div class="row gutters-20">
+      <div class="col-12 col-xl-6 col-6-xxxl">
+          <div class="card dashboard-card-one pd-b-20">
+              <div class="card-body">
+                  <div class="heading-layout1">
+                      <div class="item-title">
+                          <h3>Population Overview</h3>
+                      </div>
+                      <div class="dropdown">
+                          <a class="dropdown-toggle" href="index.html#" role="button" data-toggle="dropdown"
+                              aria-expanded="false">...</a>
+
+                          <div class="dropdown-menu dropdown-menu-right">
+                              <a class="dropdown-item" href="#"><i
+                                      class="fas fa-times text-orange-red"></i>Close</a>
+                              <a class="dropdown-item" href="#"><i
+                                      class="fas fa-cogs text-dark-pastel-green"></i>Edit</a>
+                              <a class="dropdown-item" href="#"><i
+                                      class="fas fa-redo-alt text-orange-peel"></i>Refresh</a>
+                          </div>
+                      </div>
+                  </div>
+                  
+                  <div class="earning-chart-wrap">
+                      <canvas id="populationChart" width="100" height="100"></canvas>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+
+
+
+
+      <div class="col-12 col-xl-6 col-6-xxxl">
+          <div class="card dashboard-card-two pd-b-20">
+              <div class="card-body">
+                  <div class="heading-layout1">
+                      <div class="item-title">
+                          <h3>Course Assignment Status</h3>
+                      </div>
+                      <div class="dropdown">
+                          <a class="dropdown-toggle" href="index.html#" role="button" data-toggle="dropdown"
+                              aria-expanded="false">...</a>
+
+                          <div class="dropdown-menu dropdown-menu-right">
+                              <a class="dropdown-item" href="#"><i
+                                      class="fas fa-times text-orange-red"></i>Close</a>
+                              <a class="dropdown-item" href="#"><i
+                                      class="fas fa-cogs text-dark-pastel-green"></i>Edit</a>
+                              <a class="dropdown-item" href="#"><i
+                                      class="fas fa-redo-alt text-orange-peel"></i>Refresh</a>
+                          </div>
+                      </div>
+                  </div>
+                  
+                  <div class="expense-chart-wrap">
+                      <canvas id="courseChart" width="100" height="100"></canvas>
+                  </div>
+      
+              </div>
+          </div>
+      </div>
+
+
+
+
+
+      <div class="col-12 col-xl-6 col-6-xxxl">
+          <div class="card dashboard-card-three pd-b-20">
+              <div class="card-body">
+                  <div class="heading-layout1">
+                      <div class="item-title">
+                          <h3>Students</h3>
+                      </div>
+                      <div class="dropdown">
+                          <a class="dropdown-toggle" href="index.html#" role="button" data-toggle="dropdown"
+                              aria-expanded="false">...</a>
+
+                          <div class="dropdown-menu dropdown-menu-right">
+                              <a class="dropdown-item" href="#"><i
+                                      class="fas fa-times text-orange-red"></i>Close</a>
+                              <a class="dropdown-item" href="#"><i
+                                      class="fas fa-cogs text-dark-pastel-green"></i>Edit</a>
+                              <a class="dropdown-item" href="#"><i
+                                      class="fas fa-redo-alt text-orange-peel"></i>Refresh</a>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="doughnut-chart-wrap">
+                      <canvas id="student-doughnut-chart" width="100" height="300"></canvas>
+                  </div>
+                  <div class="student-report">
+                      <div class="student-count pseudo-bg-blue">
+                          <h4 class="item-title">Female Students</h4>
+                          <div class="item-number">1</div>
+                      </div>
+                      <div class="student-count pseudo-bg-yellow">
+                          <h4 class="item-title">Male Students</h4>
+                          <div class="item-number">3</div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+
+
+
+
+
+      <div class="col-12 col-xl-6 col-6-xxxl">
+          <div class="card dashboard-card-four pd-b-20">
+              <div class="card-body">
+                  <div class="heading-layout1">
+                      <div class="item-title">
+                          <h3>Event Calender</h3>
+                      </div>
+                      <div class="dropdown">
+                          <a class="dropdown-toggle" href="index.html#" role="button" data-toggle="dropdown"
+                              aria-expanded="false">...</a>
+
+                          <div class="dropdown-menu dropdown-menu-right">
+                              <a class="dropdown-item" href="#"><i
+                                      class="fas fa-times text-orange-red"></i>Close</a>
+                              <a class="dropdown-item" href="#"><i
+                                      class="fas fa-cogs text-dark-pastel-green"></i>Edit</a>
+                              <a class="dropdown-item" href="#"><i
+                                      class="fas fa-redo-alt text-orange-peel"></i>Refresh</a>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="calender-wrap">
+                      <div id="fc-calender" class="fc-calender"></div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+
+
+
+
+      
+      
+      <div class="col-12 col-xl-12 col-12-xxxl">
+          <div class="card dashboard-card-two pd-b-20">
+              <div class="card-body">
+                  <div class="heading-layout1">
+                      <div class="item-title">
+                          <h3>Student Results Grade Distribution</h3>
+                      </div>
+                      <div class="dropdown">
+                          <a class="dropdown-toggle" href="index.html#" role="button" data-toggle="dropdown"
+                              aria-expanded="false">...</a>
+
+                          <div class="dropdown-menu dropdown-menu-right">
+                              <a class="dropdown-item" href="#"><i
+                                      class="fas fa-times text-orange-red"></i>Close</a>
+                              <a class="dropdown-item" href="#"><i
+                                      class="fas fa-cogs text-dark-pastel-green"></i>Edit</a>
+                              <a class="dropdown-item" href="#"><i
+                                      class="fas fa-redo-alt text-orange-peel"></i>Refresh</a>
+                          </div>
+                      </div>
+                  </div>
+                  
+                  <div class="expense-chart-wrap">
+                      <canvas id="gradeChart" width="500" height="200"></canvas>
+                  </div>
+              </div>
+          </div>
+      </div>
   </div>
-  
-</div>
+  <!-- Dashboard Content End Here -->
+
 
 <!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -133,6 +434,35 @@
         title: {
           display: true,
           text: 'Lecturer vs Student Population',
+          font: { size: 16 }
+        }
+      },
+      scales: {
+        y: { beginAtZero: true }
+      }
+    }
+  });
+
+  // Bar Chart: for grade distribution
+  const ctx3 = document.getElementById('gradeChart').getContext('2d');
+  new Chart(ctx3, {
+    type: 'bar',
+    data: {
+      labels: ['A', 'B', 'C', 'D', 'E', 'F'],
+      datasets: [{
+        label: 'Number of Students',
+        data: [{{ grade_A }}, {{ grade_B }}, {{ grade_C }}, {{ grade_D }}, {{ grade_E }}, {{ grade_F }}],
+        backgroundColor: ['#1abc9c', '#3498db', '#9b59b6', '#f1c40f', '#e67e22', '#e74c3c'],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        title: {
+          display: true,
+          text: 'Distribution of Grades Awarded',
           font: { size: 16 }
         }
       },

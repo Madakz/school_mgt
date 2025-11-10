@@ -1,0 +1,39 @@
+{% extends "lecturer_base.html" %}
+{% block content %}
+<div class="container mt-4">
+  <h3 class="text-primary mb-3">
+    Students Registered for {{ course.code }} - {{ course.title }}
+  </h3>
+
+  <table class="table table-bordered table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>Matric No</th>
+        <th>Full Name</th>
+        <th>Department</th>
+        <th>Level</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for reg in registrations %}
+      <tr>
+        <td>{{ reg.student.matric_no }}</td>
+        <td>{{ reg.student.user.get_full_name }}</td>
+        <td>{{ reg.student.department.name }}</td>
+        <td>{{ reg.student.level }}</td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="4" class="text-center text-muted">
+          No students registered for this course.
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+
+  </table>
+
+  <a href="{% url 'lecturer_courses' %}" class="btn btn-secondary">Back</a>
+</div>
+{% endblock %}

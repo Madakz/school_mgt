@@ -12,6 +12,78 @@ from collections import defaultdict
 
 @login_required
 def student_dashboard(request):
+    """Display all results grouped by session and semester, with GPA and CGPA."""
+    student = get_object_or_404(Student, user=request.user)
+
+    # Fetch all course registrations grouped by session and semester
+    registrations = CourseRegistration.objects.filter(student=student).select_related('course').order_by('session', 'semester')
+
+    results_grouped = {}
+    total_points_all = 0
+    total_credits_all = 0
+
+    for reg in registrations:
+        key = f"{reg.session} - {reg.semester}"
+        if key not in results_grouped:
+            results_grouped[key] = {'results': [], 'total_points': 0, 'total_credits': 0}
+
+        result = getattr(reg, 'result', None)
+        if result:
+            score = result.score
+            grade = result.grade
+            status = result.status
+            lecturer = result.submitted_by.user.get_full_name() if result.submitted_by else '-'
+
+            # Grade to point conversion
+            grade_point = 0
+            if grade == 'A':
+                grade_point = 5
+            elif grade == 'B':
+                grade_point = 4
+            elif grade == 'C':
+                grade_point = 3
+            elif grade == 'D':
+                grade_point = 2
+            elif grade == 'E':
+                grade_point = 1
+            else:
+                grade_point = 0
+
+            # Update semester totals
+            results_grouped[key]['total_points'] += grade_point * reg.course.credit_unit
+            results_grouped[key]['total_credits'] += reg.course.credit_unit
+
+            # Update overall CGPA totals
+            total_points_all += grade_point * reg.course.credit_unit
+            total_credits_all += reg.course.credit_unit
+        else:
+            score = None
+            grade = None
+            status = 'Pending'
+            lecturer = '-'
+
+        results_grouped[key]['results'].append({
+            'course': reg.course,
+            'score': score,
+            'grade': grade,
+            'status': status,
+            'lecturer': lecturer,
+        })
+
+    # Compute GPA per semester
+    for key, data in results_grouped.items():
+        total_credits = data['total_credits']
+        data['gpa'] = round(data['total_points'] / total_credits, 2) if total_credits > 0 else 0.00
+
+    # Compute CGPA
+    cgpa = round(total_points_all / total_credits_all, 2) if total_credits_all > 0 else 0.00
+
+    return render(request, 'students/dashboard.html', {
+        'student': student,
+        'results_grouped': results_grouped,
+        'cgpa': cgpa,
+    })
+
     return render(request, 'students/dashboard.html')
 
 

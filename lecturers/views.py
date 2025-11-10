@@ -6,6 +6,7 @@ from academics.models import Course
 from students.models import CourseRegistration, Result
 from students.forms import ResultForm
 from students.utils import calculate_grade
+from django.db.models import Count
 
 
 
@@ -27,17 +28,25 @@ def lecturer_dashboard(request):
     assigned_courses = Course.objects.filter(assigned_lecturer=lecturer)
     total_courses = assigned_courses.count()
 
-    # Students registered in lecturer's courses
+    # Students taking lecturer's courses
     total_students = CourseRegistration.objects.filter(course__in=assigned_courses).count()
 
-    # Results summary
+    # Results submitted by lecturer
     lecturer_results = Result.objects.filter(submitted_by=lecturer)
+
     approved_results = lecturer_results.filter(status='Approved').count()
     pending_results = lecturer_results.filter(status='Pending').count()
 
     total_results = approved_results + pending_results
     approved_percent = (approved_results / total_results * 100) if total_results > 0 else 0
     pending_percent = (pending_results / total_results * 100) if total_results > 0 else 0
+
+    # ✅ Grade Distribution Count
+    grade_counts = lecturer_results.values('grade').annotate(total=Count('grade'))
+
+    grade_map = {'A': 0, 'B': 0, 'C': 0, 'D': 0, 'E': 0, 'F': 0}
+    for g in grade_counts:
+        grade_map[g['grade']] = g['total']
 
     context = {
         'lecturer': lecturer,
@@ -47,7 +56,9 @@ def lecturer_dashboard(request):
         'pending_results': pending_results,
         'approved_percent': round(approved_percent, 2),
         'pending_percent': round(pending_percent, 2),
+        'grades': grade_map,  # ✅ Pass grade data to template
     }
+
     return render(request, 'lecturers/dashboard.html', context)
 
 
@@ -179,3 +190,18 @@ def view_results(request, course_id):
         'registrations': registrations,
     }
     return render(request, 'lecturers/view_results.html', context)
+
+
+@login_required
+@lecturer_required
+def view_course_students(request, course_id):
+    lecturer = request.user.lecturer_profile
+    course = get_object_or_404(Course, id=course_id, assigned_lecturer=lecturer)
+
+    # Students registered for this course
+    registrations = CourseRegistration.objects.filter(course=course).select_related('student__user')
+
+    return render(request, 'lecturers/course_students.html', {
+        'course': course,
+        'registrations': registrations
+    })

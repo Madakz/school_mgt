@@ -1,29 +1,254 @@
-<!DOCTYPE html>
-<html lang="en">
+{% load static %}
+<!doctype html>
+<html class="no-js" lang="">
+
 <head>
-  <meta charset="UTF-8">
-  <title>{% block title %}School Management{% endblock %}</title>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>{% block title %}School Management{% endblock %}</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/favicon.png' %}">
+    <!-- Normalize CSS -->
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <!-- Fontawesome CSS -->
+    <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
+    <!-- Flaticon CSS -->
+    <link rel="stylesheet" href="{% static 'fonts/flaticon.css' %}">
+    <!-- Full Calender CSS -->
+    <link rel="stylesheet" href="{% static 'css/fullcalendar.min.css' %}">
+    <!-- Animate CSS -->
+    <link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <!-- Modernize js -->
+    <script src="{% static 'js/modernizr-3.6.0.min.js' %}"></script>
 </head>
+
 <body>
-  <header>
-    <h1>School Management System</h1>
-    <hr>
-  </header>
-  <ul>
-    <a href="{% url 'student_dashboard' %}">Dashboard</a>
-    <a href="{% url 'student_profile' %}">Profile</a>
-    <a href="{% url 'student_view_results' %}">View My Results</a>
-    <a href="{% url 'register_courses' %}">Course enrolment</a>
-    <a href="{% url 'view_registered_courses' %}">View My Registered Courses</a>
-    <a href="{% url 'logout' %}">Logout</a>
-  </ul>
-  {% block content %}
-  
-  {% endblock %}
-  
-  <footer>
-    <hr>
-    <p>&copy; {{ year }} School Management System</p>
-  </footer>
+    <!-- Preloader Start Here -->
+    <div id="preloader"></div>
+    <!-- Preloader End Here -->
+    <div id="wrapper" class="wrapper bg-ash">
+       <!-- Header Menu Area Start Here -->
+        <div class="navbar navbar-expand-md header-menu-one bg-light">
+            <div class="nav-bar-header-one">
+                <div class="header-logo">
+                    <a href="{% url 'student_dashboard' %}">
+                        <h1>DABAK SM</h1>
+                    </a>
+                </div>
+                 <div class="toggle-button sidebar-toggle">
+                    <button type="button" class="item-link">
+                        <span class="btn-icon-wrap">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+            <div class="d-md-none mobile-nav-bar">
+               <button class="navbar-toggler pulse-animation" type="button" data-toggle="collapse" data-target="#mobile-navbar" aria-expanded="false">
+                    <i class="far fa-arrow-alt-circle-down"></i>
+                </button>
+                <button type="button" class="navbar-toggler sidebar-toggle-mobile">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <div class="header-main-menu collapse navbar-collapse" id="mobile-navbar">
+                <ul class="navbar-nav">
+                    <li class="navbar-item header-search-bar">
+                        <div class="input-group stylish-input-group">
+                            <span class="input-group-addon">
+                                <button type="submit">
+                                    <span class="flaticon-search" aria-hidden="true"></span>
+                                </button>
+                            </span>
+                            <input type="text" class="form-control" placeholder="Find Something . . .">
+                        </div>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="navbar-item dropdown header-admin">
+                        <a class="navbar-nav-link dropdown-toggle" href="index.html#" role="button" data-toggle="dropdown"
+                            aria-expanded="false">
+                            <div class="admin-title">
+                                <h5 class="item-title">{{student.user.first_name}}</h5>
+                                <span>Student</span>
+                            </div>
+                            <div class="admin-img">
+                                <img src="{% static 'img/figure/admin.jpg' %}" alt="Admin">
+                            </div>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <div class="item-header">
+                                <h6 class="item-title">Student</h6>
+                            </div>
+                            <div class="item-content">
+                                <ul class="settings-list">
+                                    <li><a href="#"><i class="flaticon-user"></i>My Profile</a></li>
+                                    <li><a href="#"><i class="flaticon-list"></i>Task</a></li>
+                                    <li><a href="#"><i class="flaticon-gear-loading"></i>Account Settings</a></li>
+                                    <li><a href="{% url 'logout' %}"><i class="flaticon-turn-off"></i>Log Out</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                    
+                    <li class="navbar-item dropdown header-notification">
+                        <a class="navbar-nav-link dropdown-toggle" href="index.html#" role="button" data-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="far fa-bell"></i>
+                            <div class="item-title d-md-none text-16 mg-l-10">Notification</div>
+                            <span>2</span>
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <div class="item-header">
+                                <h6 class="item-title">03 Notifiacations</h6>
+                            </div>
+                            <div class="item-content">
+                                <div class="media">
+                                    <div class="item-icon bg-skyblue">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                    <div class="media-body space-sm">
+                                        <div class="post-title">Approve Results</div>
+                                        <span>1 Mins ago</span>
+                                    </div>
+                                </div>
+                                <div class="media">
+                                    <div class="item-icon bg-orange">
+                                        <i class="fas fa-calendar-alt"></i>
+                                    </div>
+                                    <div class="media-body space-sm">
+                                        <div class="post-title">Assign course</div>
+                                        <span>20 Mins ago</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                     <li class="navbar-item dropdown header-language">
+                        <a class="navbar-nav-link dropdown-toggle" href="index.html#" role="button" 
+                        data-toggle="dropdown" aria-expanded="false"><i class="fas fa-globe-americas"></i>EN</a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="#">English</a>
+                            <a class="dropdown-item" href="#">Franchis</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- Header Menu Area End Here -->
+
+
+        <!-- Page Area Start Here -->
+        <div class="dashboard-page-one">
+            <!-- Sidebar Area Start Here -->
+            <div class="sidebar-main sidebar-menu-one sidebar-expand-md sidebar-color">
+               <div class="mobile-sidebar-header d-md-none">
+                    <div class="header-logo">
+                        <a href="{% url 'student_dashboard' %}"><h1 style="color: #fff;">DABAK SM</h1></a>
+                    </div>
+               </div>
+                <div class="sidebar-menu-content">
+                    <ul class="nav nav-sidebar-menu sidebar-toggle-view">
+                        <li class="nav-item sidebar-nav-item">
+                            <a href="index.html#" class="nav-link"><i class="flaticon-dashboard"></i><span>Dashboard</span></a>
+                            <ul class="nav sub-group-menu">
+                                <li class="nav-item">
+                                    <a href="{% url 'student_dashboard' %}" class="nav-link"><i class="fas fa-angle-right"></i>Student Dashboard</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item sidebar-nav-item">
+                            <a href="index.html#" class="nav-link"><i
+                                    class="flaticon-maths-class-materials-cross-of-a-pencil-and-a-ruler"></i><span>Courses</span></a>
+                            <ul class="nav sub-group-menu">
+                                <li class="nav-item">
+                                    <a href="{% url 'view_registered_courses' %}" class="nav-link"><i class="fas fa-angle-right"></i>My
+                                        Courses</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{% url 'register_courses' %}" class="nav-link"><i
+                                            class="fas fa-angle-right"></i>Register Course</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item sidebar-nav-item">
+                            <a href="index.html#" class="nav-link"><i class="flaticon-shopping-list"></i><span>Result</span></a>
+                            <ul class="nav sub-group-menu">
+                                <li class="nav-item">
+                                    <a href="{% url 'student_view_results' %}" class="nav-link"><i class="fas fa-angle-right"></i>My
+                                        Results</a>
+                                </li> 
+                            </ul>
+                        </li>
+                        
+                        
+                    </ul>
+                </div>
+            </div>
+            <!-- Sidebar Area End Here -->
+            <div class="dashboard-content-one">
+                <!-- Breadcubs Area Start Here -->
+                <div class="breadcrumbs-area">
+                    <h3>Student Dashboard</h3>
+                    <ul>
+                        <li>
+                            <a href="index.html">Home</a>
+                        </li>
+                        <li>Student</li>
+                    </ul>
+                </div>
+                <!-- Breadcubs Area End Here -->
+
+
+                {% block content %}
+                
+                {% endblock %}
+                
+                <!-- Footer Area Start Here -->
+                <footer class="footer-wrap-layout1">
+                    <div class="copyright">© Copyrights {{ year }} School Management System </div>
+                </footer>
+                <!-- Footer Area End Here -->
+            </div>
+        </div>
+        <!-- Page Area End Here -->
+    </div>
+    <!-- jquery-->
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <!-- Plugins js -->
+    <script src="{% static 'js/plugins.js' %}"></script>
+    <!-- Popper js -->
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <!-- Bootstrap js -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <!-- Counterup Js -->
+    <script src="{% static 'js/jquery.counterup.min.js' %}"></script>
+    <!-- Moment Js -->
+    <script src="{% static 'js/moment.min.js' %}"></script>
+    <!-- Waypoints Js -->
+    <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+    <!-- Scroll Up Js -->
+    <script src="{% static 'js/jquery.scrollUp.min.js' %}"></script>
+    <!-- Full Calender Js -->
+    <script src="{% static 'js/fullcalendar.min.js' %}"></script>
+    <!-- Chart Js -->
+    <script src="{% static 'js/Chart.min.js' %}"></script>
+    <!-- Data Table Js -->
+    <script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+    <!-- Custom Js -->
+    <script src="{% static 'js/main.js' %}"></script>
+
 </body>
+
 </html>

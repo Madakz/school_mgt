@@ -9,6 +9,7 @@
         <th>Code</th>
         <th>Title</th>
         <th>Department</th>
+        <th>Students</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -18,6 +19,11 @@
           <td>{{ course.code }}</td>
           <td>{{ course.title }}</td>
           <td>{{ course.department.name }}</td>
+          <td>
+            <a href="{% url 'view_course_students' course.id %}" class="btn btn-sm btn-info">
+              View Students
+            </a>
+          </td>
           <td>
             {% if course.result_status == 'none' %}
               <a href="{% url 'submit_results' course.id %}" class="btn btn-sm btn-primary">

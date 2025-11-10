@@ -1,25 +1,66 @@
-<!DOCTYPE html>
-<html lang="en">
+{% load static %}
+<!doctype html>
+<html class="no-js" lang="">
+
 <head>
-  <meta charset="UTF-8">
-  <title>{% block title %}School Management{% endblock %}</title>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>{% block title %}School Management{% endblock %}</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/favicon.png' %}">
+    <!-- Normalize CSS -->
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <!-- Fontawesome CSS -->
+    <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
+    <!-- Flaticon CSS -->
+    <link rel="stylesheet" href="{% static 'fonts/flaticon.css' %}">
+    <!-- Animate CSS -->
+    <link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <!-- Modernize js -->
+    <script src="{% static 'js/modernizr-3.6.0.min.js' %}"></script>
 </head>
+
 <body>
-  <header>
-    <h1>School Management System</h1>
-    <hr>
-  </header>
-  <ul>
-    <a href="{% url 'home' %}">Home</a>
-    <a href="{% url 'login' %}">Login</a>
-    <a href="{% url 'logout' %}">Logout</a>
-  </ul>
-  {% block content %}
-  {% endblock %}
-  
-  <footer>
-    <hr>
-    <p>&copy; {{ year }} School Management System</p>
-  </footer>
+    <!-- Preloader Start Here -->
+    <div id="preloader"></div>
+    <!-- Preloader End Here -->
+    <!-- Login Page Start Here -->
+    <div class="login-page-wrap">
+        <div class="login-page-content">
+            <div class="login-box">
+                <div class="item-logo">
+                    <h1>DABAK SM</h1>
+                </div>
+                {% block content %}
+                {% endblock %}
+        <footer>
+        <hr>
+        <p>&copy; {{ year }} School Management System</p>
+    </footer>
+    </div>
+    <!-- Login Page End Here -->
+    
+    <!-- jquery-->
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <!-- Plugins js -->
+    <script src="{% static 'js/plugins.js' %}"></script>
+    <!-- Popper js -->
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <!-- Bootstrap js -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <!-- Scroll Up Js -->
+    <script src="{% static 'js/jquery.scrollUp.min.js' %}"></script>
+    <!-- Custom Js -->
+    <script src="{% static 'js/main.js' %}"></script>
+
 </body>
+
 </html>

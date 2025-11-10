@@ -7,6 +7,8 @@ from .forms import AdminUserForm, CustomUserForm, LecturerForm, StudentForm, Cou
 from lecturers.models import Lecturer
 from students.models import Student, Result
 from academics.models import Course
+from django.db.models import Count
+
 
 
 
@@ -24,6 +26,7 @@ def admin_required(view_func):
 @login_required
 @admin_required
 def admin_dashboard(request):
+    user = request.user
     # Existing admins list
     admins = AdminUser.objects.select_related('user')
 
@@ -36,13 +39,37 @@ def admin_dashboard(request):
     assigned_courses = Course.objects.filter(assigned_lecturer__isnull=False).count()
     unassigned_courses = Course.objects.filter(assigned_lecturer__isnull=True).count()
 
+    # Count grades
+    grade_counts = Result.objects.values('grade').annotate(total=Count('grade'))
+
+    grade_data = {
+        'A': 0,
+        'B': 0,
+        'C': 0,
+        'D': 0,
+        'E': 0,
+        'F': 0
+    }
+
+    for item in grade_counts:
+        grade_data[item['grade']] = item['total']
+
     context = {
+        'user': user,
         'admins': admins,
         'total_lecturers': total_lecturers,
         'total_students': total_students,
         'total_courses': total_courses,
         'assigned_courses': assigned_courses,
         'unassigned_courses': unassigned_courses,
+
+        # Pass grade data to template
+        'grade_A': grade_data['A'],
+        'grade_B': grade_data['B'],
+        'grade_C': grade_data['C'],
+        'grade_D': grade_data['D'],
+        'grade_E': grade_data['E'],
+        'grade_F': grade_data['F'],
     }
 
     return render(request, 'administration/dashboard.html', context)

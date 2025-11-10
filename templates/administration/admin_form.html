@@ -1,17 +1,43 @@
 {% extends '../admin_base.html' %}
 {% block content %}
-<h2>{{ title }}</h2>
-<form method="POST">
-    {% csrf_token %}
-    <fieldset>
-        <legend>Account Info</legend>
-        {{ user_form.as_p }}
-    </fieldset>
-    <fieldset>
-        <legend>Admin Details</legend>
-        {{ admin_form.as_p }}
-    </fieldset>
-    <button type="submit">Save</button>
-    <a href="{% url 'admin_list' %}">Cancel</a>
-</form>
+
+<div class="dashboard-content-one">
+    <!-- Add New Book Area Start Here -->
+    <div class="card height-auto">
+        <div class="card-body">
+            <div class="heading-layout1">
+                <div class="item-title">
+                    <h3>{{ title }}</h3>
+                </div>
+            </div>
+            <form class="new-added-form" method="POST">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-12 form-group">
+                        <fieldset>
+                            <legend>Account Info</legend>
+                            {{ user_form.as_p }}
+                        </fieldset>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-12 form-group">
+                        <fieldset>
+                            <legend>Admin Details</legend>
+                            {{ admin_form.as_p }}
+                        </fieldset>
+                    </div>
+                    
+                    
+                    <div class="col-md-3 d-none d-xl-block form-group">
+                        
+                    </div>
+                    <div class="col-12 form-group mg-t-8">
+                        <button type="submit" class="btn-fill-lg btn-gradient-yellow btn-hover-bluedark">Save</button>
+                        <a href="{% url 'admin_list' %}"><button type="button" class="btn-fill-lg bg-blue-dark btn-hover-yellow">Cancel</button></a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

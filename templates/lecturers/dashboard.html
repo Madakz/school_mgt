@@ -48,6 +48,15 @@
       <canvas id="resultsChart"></canvas>
     </div>
   </div>
+
+  <!-- Grade Distribution Chart -->
+  <div class="mt-5 text-center">
+    <h4 class="text-secondary mb-3">Grade Distribution</h4>
+    <div style="width: 500px; margin: auto;">
+      <canvas id="gradeChart"></canvas>
+    </div>
+  </div>
+
 </div>
 
 <!-- Chart.js -->
@@ -80,6 +89,42 @@
         }
       }
     }
+  });
+
+
+
+  const gradeCtx = document.getElementById('gradeChart').getContext('2d');
+  new Chart(gradeCtx, {
+  type: 'bar',
+  data: {
+  labels: ['A', 'B', 'C', 'D', 'E', 'F'],
+  datasets: [{
+  label: 'Number of Students',
+  data: [
+    {{ grades.A }},
+    {{ grades.B }},
+    {{ grades.C }},
+    {{ grades.D }},
+    {{ grades.E }},
+    {{ grades.F }}
+  ],
+  backgroundColor: ['#28a745', '#17a2b8', '#007bff', '#ffc107', '#fd7e14', '#dc3545'],
+  borderWidth: 1
+  }]
+  },
+  options: {
+  responsive: true,
+  plugins: {
+  title: {
+  display: true,
+  text: 'Grade Performance Overview',
+  font: { size: 16 }
+  }
+  },
+  scales: {
+  y: { beginAtZero: true }
+  }
+  }
   });
 </script>
 {% endblock %}

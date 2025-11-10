@@ -1,29 +1,60 @@
 {% extends "../admin_base.html" %}
 {% block content %}
-<h2>Course Assignment List</h2>
-<table border="1" cellpadding="10">
-  <tr>
-    <th>Code</th>
-    <th>Title</th>
-    <th>Credit Unit</th>
-    <th>Department</th>
-    <th>Assigned Lecturer</th>
-    <th>Actions</th>
-  </tr>
-  {% for course in courses %}
-  <tr>
-    <td>{{ course.code }}</td>
-    <td>{{ course.title }}</td>
-    <td>{{ course.credit_unit }}</td>
-    <td>{{ course.department.name }}</td>
-    <td>{{ course.assigned_lecturer.user.get_full_name|default:"Not Assigned" }}</td>
-    <td>
-      <a href="{% url 'assign_course' course.id %}">Assign/Edit</a> |
-      {% if course.assigned_lecturer %}
-      <a href="{% url 'unassign_course' course.id %}">Unassign</a>
-      {% endif %}
-    </td>
-  </tr>
-  {% endfor %}
-</table>
+
+<div class="dashboard-content-one">
+  <!-- Student Table Area Start Here -->
+  <div class="card height-auto">
+      <div class="card-body">
+          <div class="heading-layout1">
+              <div class="item-title">
+                  <h3>Course Assignment List</h3>
+              </div>
+              
+          </div>
+          
+          <div class="table-responsive">
+              <table class="table display data-table text-nowrap">
+                  <thead>
+                      <tr>
+                          <th>Code</th>
+                          <th>Title</th>
+                          <th>Credit Unit</th>
+                          <th>Department</th>
+                          <th>Assigned Lecturer</th>
+                          <th>Actions</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    {% for course in courses %}
+                      <tr>
+                        <td>{{ course.code }}</td>
+                        <td>{{ course.title }}</td>
+                        <td>{{ course.credit_unit }}</td>
+                        <td>{{ course.department.name }}</td>
+                        <td>{{ course.assigned_lecturer.user.get_full_name|default:"Not Assigned" }}</td>
+                      
+                        <td>
+                            <div class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                                    aria-expanded="false">
+                                    <span class="flaticon-more-button-of-three-dots"></span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a class="dropdown-item" href="{% url 'unassign_course' course.id %}"><i
+                                            class="fas fa-times text-orange-red"></i>Unassign</a>
+                                    <a class="dropdown-item" href="{% url 'assign_course' course.id %}"><i
+                                            class="fas fa-cogs text-dark-pastel-green"></i>Assign/Edit</a>
+                                </div>
+                            </div>
+                        </td>
+                      </tr> 
+                      {% empty %}
+                      <tr><td colspan="6">No courses found.</td></tr>
+                      {% endfor %} 
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </div>
+</div>
 {% endblock %}
