@@ -21,7 +21,7 @@
             <td>{{ reg.student.user.get_full_name }}</td>
             <td>{{ reg.result.score }}</td>
             <td>{{ reg.result.grade }}</td>
-            <td>
+            <td style="color: #fff;">
               {% if reg.result.status == 'Approved' %}
                 <span class="badge bg-success">Approved</span>
               {% else %}
