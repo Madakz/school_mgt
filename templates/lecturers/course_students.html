@@ -1,39 +1,62 @@
 {% extends "lecturer_base.html" %}
 {% block content %}
-<div class="container mt-4">
-  <h3 class="text-primary mb-3">
-    Students Registered for {{ course.code }} - {{ course.title }}
-  </h3>
 
-  <table class="table table-bordered table-striped">
-    <thead class="table-dark">
-      <tr>
-        <th>Matric No</th>
-        <th>Full Name</th>
-        <th>Department</th>
-        <th>Level</th>
-      </tr>
-    </thead>
+<div class="dashboard-content-one">
+  <!-- Student Table Area Start Here -->
+  <div class="card height-auto">
+      <div class="card-body">
+          <div class="heading-layout1">
+              <div class="item-title">
+                  <h3>Students Registered for {{ course.code }} - {{ course.title }}</h3>
+              </div>
+              
+          </div>
 
-    <tbody>
-      {% for reg in registrations %}
-      <tr>
-        <td>{{ reg.student.matric_no }}</td>
-        <td>{{ reg.student.user.get_full_name }}</td>
-        <td>{{ reg.student.department.name }}</td>
-        <td>{{ reg.student.level }}</td>
-      </tr>
-      {% empty %}
-      <tr>
-        <td colspan="4" class="text-center text-muted">
-          No students registered for this course.
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-
-  </table>
-
-  <a href="{% url 'lecturer_courses' %}" class="btn btn-secondary">Back</a>
+            {% if messages %}
+                {% for message in messages %}
+                <div class="ui-alart-box">
+                    <div class="dismiss-alart">                                
+                        <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                            {{ message }}!
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>                                
+                    </div>
+                </div>
+                {% endfor %}
+            {% endif %}
+          
+            <div class="table-responsive">
+              <table class="table display data-table text-nowrap">
+                  <thead>
+                      <tr>
+                          <th>Matric No</th>
+                          <th>Full Name</th>
+                          <th>Department</th>
+                          <th>Level</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    {% for reg in registrations %}
+                    <tr>
+                      <td>{{ reg.student.matric_no }}</td>
+                      <td>{{ reg.student.user.get_full_name }}</td>
+                      <td>{{ reg.student.department.name }}</td>
+                      <td>{{ reg.student.level }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                      <td colspan="4" class="text-center text-muted">
+                        No students registered for this course.
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </div>
 </div>
+
 {% endblock %}

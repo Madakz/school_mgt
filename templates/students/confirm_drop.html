@@ -1,17 +1,27 @@
 {% extends "../student_base.html" %}
 {% block content %}
-<div class="container mt-5">
-  <div class="card shadow p-4 text-center">
-    <h4 class="text-danger mb-3">Confirm Course Drop</h4>
-    <p>Are you sure you want to drop this course?</p>
 
-    <p><strong>{{ registration.course.code }} - {{ registration.course.title }}</strong></p>
+<div class="dashboard-content-one">
+  <!-- Add New Book Area Start Here -->
+  <div class="card height-auto">
+    <div class="card-body">
+      <div class="heading-layout1">
+          <div class="item-title">
+            <h3>Confirm Course Drop</h3>
+            <p>Are you sure you want to drop this course?</p>
+            <h5>{{ registration.course.code }} - {{ registration.course.title }}</h5>
+          </div>
+      </div>
+      <form method="post">
+        {% csrf_token %}
 
-    <form method="POST">
-      {% csrf_token %}
-      <button type="submit" class="btn btn-danger">Yes, Drop Course</button>
-      <a href="{% url 'view_registered_courses' %}" class="btn btn-secondary">Cancel</a>
-    </form>
+        <div class="col-12 form-group mg-t-8">
+          <button type="submit" class="btn-fill-lg btn-gradient-yellow btn-hover-bluedark">Yes, Drop Course</button>
+          <a href="{% url 'view_registered_courses' %}"><button type="button" class="btn-fill-lg bg-blue-dark btn-hover-yellow">Cancel</button></a>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
+
 {% endblock %}

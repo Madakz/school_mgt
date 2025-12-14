@@ -22,7 +22,15 @@ class StudentProfileForm(forms.ModelForm):
 
     class Meta:
         model = CustomUser
-        fields = ['first_name', 'last_name', 'username', 'password']
+        fields = ['first_name', 'last_name', 'username']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Form styling
+        for name, field in self.fields.items():
+            field.widget.attrs.setdefault("class", "form-control")
+
 
     def save(self, commit=True):
         user = super().save(commit=False)

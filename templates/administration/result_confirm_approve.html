@@ -1,18 +1,55 @@
 {% extends "admin_base.html" %}
 {% block content %}
-<h2>Approve Result</h2>
-<p>Are you sure you want to approve this result?</p>
 
-<p><strong>Student:</strong> {{ result.registration.student.user.get_full_name }}</p>
-<p><strong>Course:</strong> {{ result.registration.course.code }} - {{ result.registration.course.title }}</p>
-<p><strong>Score:</strong> {{ result.score }}</p>
-<p><strong>Grade:</strong> {{ result.grade }}</p>
-<p><strong>Status:</strong> {{ result.status }}</p>
 
-<form method="POST">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Approve Result</button>
-  <a href="{% url 'result_list' %}">Cancel</a>
-</form>
+<div class="dashboard-content-one">
+  <!-- Add New Book Area Start Here -->
+  <div class="card height-auto">
+    <div class="card-body">
+      <div class="heading-layout1">
+          <div class="item-title">
+              <h3>Approve Result</h3>
+              <p>Are you sure you want to approve this result?</p>
+          </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-12 form-group">
+            <label>Student</label>
+            <input type="input" value="{{ result.registration.student.user.get_full_name }}" class="form-control" readonly>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-12 form-group">
+            <label>Course</label>
+            <input type="input" value="{{ result.registration.course.code }} - {{ result.registration.course.title }}" class="form-control" readonly>
+        </div>   
+        <div class="col-xl-6 col-lg-6 col-12 form-group">
+            <label>Current Status</label>
+            <input type="input" value="{{ result.status }}" class="form-control" readonly>
+        </div>     
+          
+      </div>
+      <form method="post">
+        {% csrf_token %}
+        <div class="row">
+          <div class="col-xl-6 col-lg-6 col-12 form-group">
+              <label>Score</label>
+              {{ form.score }}
+          </div>
+          <div class="col-xl-6 col-lg-6 col-12 form-group">
+              <label>Grade</label>
+              {{ form.grade }}
+          </div>   
+          <div class="col-xl-6 col-lg-6 col-12 form-group">
+              <label>Change Status</label>
+              {{ form.status }}
+          </div>     
+           
+        </div>
+        <div class="col-12 form-group mg-t-8">
+          <button type="submit" class="btn-fill-lg btn-gradient-yellow btn-hover-bluedark">Approve Result</button>
+          <a href="{% url 'result_list' %}"><button type="button" class="btn-fill-lg bg-blue-dark btn-hover-yellow">Cancel</button></a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 {% endblock %}

@@ -14,8 +14,42 @@
                 {% csrf_token %}
                 <div class="row">
                     <div class="col-xl-6 col-lg-6 col-12 form-group">
-                        {{ form.as_p }}
+                        <label>Email <span class="text-danger">*</span></label>
+                        {{ form.email }}
                     </div>
+                    <div class="col-xl-6 col-lg-6 col-12 form-group">
+                        <label>Username <span class="text-danger">*</span></label>
+                        {{ form.username }}
+                    </div>   
+                    <div class="col-xl-6 col-lg-6 col-12 form-group">
+                        <label>First Name <span class="text-danger">*</span></label>
+                        {{ form.first_name }}
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-12 form-group">
+                        <label>Last Name <span class="text-danger">*</span></label>
+                        {{ form.last_name }}
+                    </div> 
+                    <div class="col-xl-6 col-lg-6 col-12 form-group">
+                        <label>Password <span class="text-danger">*</span></label>
+                        {{ form.password }}
+                    </div>
+
+                    <div class="col-xl-6 col-lg-6 col-12 form-group">
+                        <label>Maticulation Number <span class="text-danger">*</span></label>
+                        {{ form.matric_no }}
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-12 form-group">
+                        <label>Department <span class="text-danger">*</span></label>
+                        {{ form.department }}
+                    </div>   
+                    <div class="col-xl-6 col-lg-6 col-12 form-group">
+                        <label>Level <span class="text-danger">*</span></label>
+                        {{ form.level }}
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-12 form-group">
+                        <label>Admission Year <span class="text-danger">*</span></label>
+                        {{ form.admission_year }}
+                    </div> 
 
                     <div class="col-12 form-group mg-t-8">
                         <button type="submit" class="btn-fill-lg btn-gradient-yellow btn-hover-bluedark">Save</button>

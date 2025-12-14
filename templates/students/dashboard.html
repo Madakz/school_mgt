@@ -35,7 +35,7 @@
                     <div class="table-box-wrap">
                         {% if results_grouped %}
                         {% for key, data in results_grouped.items %}
-                            <h5 class="mt-4 text-success">{{ key }} Semester</h5>
+                            <h5 class="mt-4 text-primary">{{ key }} Semester</h5>
                         <div class="table-responsive result-table-box">
                             <table class="table display data-table text-nowrap">
                             <thead>
@@ -59,7 +59,7 @@
                                     <td>{{ r.grade|default:"-" }}</td>
                                     <td>
                                         {% if r.status == "Approved" %}
-                                        <span class="badge bg-success" style="color: #fff;">Approved</span>
+                                        <span class="badge bg-primary" style="color: #fff;">Approved</span>
                                         {% else %}
                                         <span class="badge bg-warning text-dark" style="color: #fff;">{{ r.status }}</span>
                                         {% endif %}
@@ -71,12 +71,12 @@
                             </table>
                             <hr>
                             <div class="text-end mb-4">
-                                <strong>Semester GPA:</strong> {{ data.gpa }}
+                                <h5><strong>Semester GPA:</strong> {{ data.gpa }}</h5>
                             </div>
                             {% endfor %}
                             <hr>
                             <div class="text-end mt-3">
-                                <h5><strong>Cumulative GPA (CGPA):</strong> {{ cgpa }}</h5>
+                                <h4><strong>Cumulative GPA (CGPA):</strong> {{ cgpa }}</h4>
                             </div>
 
                             {% else %}
@@ -92,7 +92,7 @@
             </div>
         </div>
 
-        <div class="col-lg-4 col-xl-4 col-12-xxxl">
+        <div class="col-lg-6 col-xl-6 col-6-xxxl">
             <div class="card dashboard-card-six pd-b-20">
                 <div class="card-body">
                     <div class="heading-layout1 mg-b-17">
@@ -102,17 +102,17 @@
                     </div>
                     <div class="notice-box-wrap">
                         <div class="notice-list">
-                            <div class="post-date bg-skyblue">05 November, 2025</div>
+                            <div class="post-date bg-pink">05 November, 2025</div>
                             <h6 class="notice-title"><a href="#">All school fee payments should be made before 1st December, 2025.</a></h6>
                             <div class="entry-meta"> Admin / <span>hours ago</span></div>
                         </div>
                         <div class="notice-list">
-                            <div class="post-date bg-yellow">03 November, 2025</div>
+                            <div class="post-date bg-pink">03 November, 2025</div>
                             <h6 class="notice-title"><a href="#">All Students are to vacate the hostel before 21st November, 2025.</a></h6>
                             <div class="entry-meta"> Admin / <span>hours ago</span></div>
                         </div>
                         <div class="notice-list">
-                            <div class="post-date bg-pink">04 November, 2025</div>
+                            <div class="post-date bg-blue">04 November, 2025</div>
                             <h6 class="notice-title"><a href="#">UNICEF enrols 33,532 out-of-school children on digital learning in Borno.</a></h6>
                             <div class="entry-meta"> Admin / <span>hours ago</span></div>
                         </div>
@@ -120,24 +120,26 @@
                 </div>
             </div>
         </div>
-    </div>
 
-
-    <!-- <div class="col-lg-6 col-xl-6 col-6-xxxl">
-        <div class="card dashboard-card-four pd-b-20">
-            <div class="card-body">
-                <div class="heading-layout1">
-                    <div class="item-title">
-                        <h3>Event Calender</h3>
+        <div class="col-lg-6 col-xl-6 col-6-xxxl">
+            <div class="card dashboard-card-four pd-b-20">
+                <div class="card-body">
+                    <div class="heading-layout1">
+                        <div class="item-title">
+                            <h3>Event Calender</h3>
+                        </div>
+                        
                     </div>
-                    
-                </div>
-                <div class="calender-wrap">
-                    <div id="fc-calender" class="fc-calender"></div>
+                    <div class="calender-wrap">
+                        <div id="fc-calender" class="fc-calender"></div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div> -->
+    </div>
+
+
+    
 
 
     

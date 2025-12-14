@@ -1,63 +1,176 @@
 {% extends '../lecturer_base.html' %}
 {% block content %}
-<div class="container mt-5">
+
+<div>
   <h2 class="mb-4 text-primary">Welcome, {{ lecturer.user.get_full_name }}</h2>
-
-  <div class="row text-center">
-    <div class="col-md-3 mb-3">
-      <div class="card shadow-sm border-primary">
-        <div class="card-body">
-          <h5 class="card-title">Assigned Courses</h5>
-          <h3 class="text-primary">{{ total_courses }}</h3>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-3 mb-3">
-      <div class="card shadow-sm border-success">
-        <div class="card-body">
-          <h5 class="card-title">Students</h5>
-          <h3 class="text-success">{{ total_students }}</h3>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-3 mb-3">
-      <div class="card shadow-sm border-info">
-        <div class="card-body">
-          <h5 class="card-title">Approved Results</h5>
-          <h3 class="text-info">{{ approved_results }}</h3>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-3 mb-3">
-      <div class="card shadow-sm border-warning">
-        <div class="card-body">
-          <h5 class="card-title">Pending Results</h5>
-          <h3 class="text-warning">{{ pending_results }}</h3>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Pie Chart Section -->
-  <div class="mt-5 text-center">
-    <h4 class="text-secondary mb-3">Results Status Overview</h4>
-    <div style="width: 400px; margin: auto;">
-      <canvas id="resultsChart"></canvas>
-    </div>
-  </div>
-
-  <!-- Grade Distribution Chart -->
-  <div class="mt-5 text-center">
-    <h4 class="text-secondary mb-3">Grade Distribution</h4>
-    <div style="width: 500px; margin: auto;">
-      <canvas id="gradeChart"></canvas>
-    </div>
-  </div>
-
 </div>
+<!-- Dashboard summery Start Here -->
+    <div class="row gutters-20">
+        <div class="col-xl-3 col-sm-6 col-12">
+            <div class="dashboard-summery-one mg-b-20">
+                <div class="row align-items-center">
+                    <div class="col-6">
+                        <div class="item-icon bg-light-green ">
+                            <i class="flaticon-mortarboard text-blue"></i>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="item-content">
+                            <div class="item-title">Assigned Courses</div>
+                            <div class="item-number"><span class="counter" data-num="{{ total_courses }}">{{ total_courses }}</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 col-12">
+            <div class="dashboard-summery-one mg-b-20">
+                <div class="row align-items-center">
+                    <div class="col-6">
+                        <div class="item-icon bg-light-blue">
+                            <i class="flaticon-multiple-users-silhouette text-blue"></i>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="item-content">
+                            <div class="item-title">Students</div>
+                            <div class="item-number"><span class="counter" data-num="{{ total_students }}">{{ total_students }}</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 col-12">
+            <div class="dashboard-summery-one mg-b-20">
+                <div class="row align-items-center">
+                    <div class="col-6">
+                        <div class="item-icon bg-light-green">
+                            <i class="flaticon-shopping-list text-blue"></i>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="item-content">
+                            <div class="item-title">Approved Results</div>
+                            <div class="item-number"><span class="counter" data-num="{{ approved_results }}">{{ approved_results }}</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 col-12">
+            <div class="dashboard-summery-one mg-b-20">
+                <div class="row align-items-center">
+                    <div class="col-6">
+                        <div class="item-icon bg-light-red">
+                            <i class="flaticon-shopping-list text-red"></i>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="item-content">
+                            <div class="item-title">Pending Results</div>
+                            <div class="item-number"><span class="counter" data-num="{{ pending_results }}">{{ pending_results }}</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Dashboard summery End Here -->
+
+
+    <!-- Metrics Dashboard Content Start Here -->
+  <div class="row gutters-20">
+      <div class="col-12 col-xl-6 col-6-xxxl">
+          <div class="card dashboard-card-one pd-b-20">
+              <div class="card-body">
+                  <div class="heading-layout1">
+                      <div class="item-title">
+                          <h3>Results Status Overview</h3>
+                      </div>
+                      <div class="dropdown">
+                          <a class="dropdown-toggle" href="index.html#" role="button" data-toggle="dropdown"
+                              aria-expanded="false">...</a>
+
+                          <div class="dropdown-menu dropdown-menu-right">
+                              <a class="dropdown-item" href="#"><i
+                                      class="fas fa-times text-orange-red"></i>Close</a>
+                              <a class="dropdown-item" href="#"><i
+                                      class="fas fa-cogs text-dark-pastel-green"></i>Edit</a>
+                              <a class="dropdown-item" href="#"><i
+                                      class="fas fa-redo-alt text-orange-peel"></i>Refresh</a>
+                          </div>
+                      </div>
+                  </div>
+                  
+                  <div class="earning-chart-wrap">
+                      <canvas id="resultsChart"></canvas>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-12 col-xl-6 col-6-xxxl">
+          <div class="card dashboard-card-four pd-b-20">
+              <div class="card-body">
+                  <div class="heading-layout1">
+                      <div class="item-title">
+                          <h3>Event Calender</h3>
+                      </div>
+                      <div class="dropdown">
+                          <a class="dropdown-toggle" href="index.html#" role="button" data-toggle="dropdown"
+                              aria-expanded="false">...</a>
+
+                          <div class="dropdown-menu dropdown-menu-right">
+                              <a class="dropdown-item" href="#"><i
+                                      class="fas fa-times text-orange-red"></i>Close</a>
+                              <a class="dropdown-item" href="#"><i
+                                      class="fas fa-cogs text-dark-pastel-green"></i>Edit</a>
+                              <a class="dropdown-item" href="#"><i
+                                      class="fas fa-redo-alt text-orange-peel"></i>Refresh</a>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="calender-wrap">
+                      <div id="fc-calender" class="fc-calender"></div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+
+
+
+
+      
+      
+      <div class="col-12 col-xl-12 col-12-xxxl">
+        <div class="card dashboard-card-two pd-b-20">
+            <div class="card-body">
+              <div class="heading-layout1">
+                <div class="item-title">
+                  <h3>Student Results Grade Distribution</h3>
+                </div>
+                <div class="dropdown">
+                  <a class="dropdown-toggle" href="index.html#" role="button" data-toggle="dropdown"
+                      aria-expanded="false">...</a>
+
+                  <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="#"><i class="fas fa-times text-orange-red"></i>Close</a>
+                    <a class="dropdown-item" href="#"><i class="fas fa-cogs text-dark-pastel-green"></i>Edit</a>
+                    <a class="dropdown-item" href="#"><i class="fas fa-redo-alt text-orange-peel"></i>Refresh</a>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="expense-chart-wrap">
+                <canvas id="gradeChart" width="500" height="200"></canvas>
+              </div>
+            </div>
+        </div>
+      </div>
+  </div>
+  <!-- Metrics Dashboard Content End Here -->
+
 
 <!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

@@ -1,48 +1,79 @@
 {% extends 'lecturer_base.html' %}
 {% block content %}
-<div class="container mt-4">
-  <h3 class="text-primary mb-3">Results for {{ course.title }} ({{ course.code }})</h3>
 
-  <table class="table table-striped table-bordered">
-    <thead class="table-dark">
-      <tr>
-        <th>Matric No</th>
-        <th>Student Name</th>
-        <th>Score</th>
-        <th>Grade</th>
-        <th>Status</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for reg in registrations %}
-        {% if reg.result %}
-          <tr>
-            <td>{{ reg.student.matric_no }}</td>
-            <td>{{ reg.student.user.get_full_name }}</td>
-            <td>{{ reg.result.score }}</td>
-            <td>{{ reg.result.grade }}</td>
-            <td style="color: #fff;">
-              {% if reg.result.status == 'Approved' %}
-                <span class="badge bg-success">Approved</span>
-              {% else %}
-                <span class="badge bg-warning text-dark">Pending</span>
-              {% endif %}
-            </td>
-          </tr>
-        {% else %}
-          <tr>
-            <td>{{ reg.student.matric_no }}</td>
-            <td>{{ reg.student.user.get_full_name }}</td>
-            <td colspan="3" class="text-center text-muted">No result submitted</td>
-          </tr>
-        {% endif %}
-      {% empty %}
-        <tr><td colspan="5" class="text-center">No students registered.</td></tr>
-      {% endfor %}
-    </tbody>
-  </table>
+<div class="dashboard-content-one">
+  <!-- Student Table Area Start Here -->
+  <div class="card height-auto">
+      <div class="card-body">
+          <div class="heading-layout1">
+              <div class="item-title">
+                  <h3>Results for {{ course.title }} ({{ course.code }})</h3>
+              </div>
+              <div>
+                <a href="{% url 'manage_results' course.id %}" class="btn btn-lg btn-info">Edit Pending Results</a>
+                <a href="{% url 'lecturer_courses' %}" class="btn btn-lg btn-secondary text-white">Back to Courses</a>
+              </div>
+              
+          </div>
 
-  <a href="{% url 'manage_results' course.id %}" class="btn btn-primary">Edit Pending Results</a>
-  <a href="{% url 'lecturer_courses' %}" class="btn btn-secondary">Back to Courses</a>
+            {% if messages %}
+                {% for message in messages %}
+                <div class="ui-alart-box">
+                    <div class="dismiss-alart">                                
+                        <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                            {{ message }}!
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>                                
+                    </div>
+                </div>
+                {% endfor %}
+            {% endif %}
+          
+            <div class="table-responsive">
+              <table class="table display data-table text-nowrap">
+                  <thead>
+                      <tr>
+                          <th>Matric No</th>
+                          <th>Student Name</th>
+                          <th>Score</th>
+                          <th>Grade</th>
+                          <th>Status</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    {% for reg in registrations %}
+                      {% if reg.result %}
+                        <tr>
+                          <td>{{ reg.student.matric_no }}</td>
+                          <td>{{ reg.student.user.get_full_name }}</td>
+                          <td>{{ reg.result.score }}</td>
+                          <td>{{ reg.result.grade }}</td>
+                          <td style="color: #fff;">
+                            {% if reg.result.status == 'Approved' %}
+                              <span class="badge bg-success">Approved</span>
+                            {% else %}
+                              <span class="badge bg-warning text-white">Pending</span>
+                            {% endif %}
+                          </td>
+                        </tr>
+                      {% else %}
+                        <tr>
+                          <td>{{ reg.student.matric_no }}</td>
+                          <td>{{ reg.student.user.get_full_name }}</td>
+                          <td colspan="3" class="text-center text-white">No result submitted</td>
+                        </tr>
+                      {% endif %}
+                    {% empty %}
+                      <tr><td colspan="5" class="text-center">No students registered.</td></tr>
+                    {% endfor %}
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </div>
 </div>
+
+
 {% endblock %}

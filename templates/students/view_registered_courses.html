@@ -1,41 +1,74 @@
 {% extends "../student_base.html" %}
 {% block content %}
-<div class="container mt-5">
-  <div class="card shadow p-4">
-    <h3 class="text-primary mb-4">My Registered Courses</h3>
 
-    {% if registrations %}
-    <table class="table table-striped align-middle">
-      <thead class="table-dark">
-        <tr>
-          <th>Course Code</th>
-          <th>Title</th>
-          <th>Credit Unit</th>
-          <th>Session</th>
-          <th>Semester</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for reg in registrations %}
-        <tr>
-          <td>{{ reg.course.code }}</td>
-          <td>{{ reg.course.title }}</td>
-          <td>{{ reg.course.credit_unit }}</td>
-          <td>{{ reg.session }}</td>
-          <td>{{ reg.semester }}</td>
-          <td>
-            <a href="{% url 'drop_course' reg.id %}" class="btn btn-sm btn-danger">
-              Drop
-            </a>
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    {% else %}
-    <p class="text-center text-muted">You have not registered any course yet.</p>
-    {% endif %}
+<div class="dashboard-content-one">
+  <!-- Student Table Area Start Here -->
+  <div class="card height-auto">
+      <div class="card-body">
+          <div class="heading-layout1">
+              <div class="item-title">
+                  <h3>My Registered Courses</h3>
+              </div>
+              
+          </div>
+
+            {% if messages %}
+                {% for message in messages %}
+                <div class="ui-alart-box">
+                    <div class="dismiss-alart">                                
+                        <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                            {{ message }}!
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>                                
+                    </div>
+                </div>
+                {% endfor %}
+            {% endif %}
+          
+            {% if registrations %}
+            <div class="table-responsive">
+              <table class="table display data-table text-nowrap">
+                  <thead>
+                      <tr>
+                        <th>Course Code</th>
+                        <th>Title</th>
+                        <th>Credit Unit</th>
+                        <th>Session</th>
+                        <th>Semester</th>
+                        <th>Action</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    {% for reg in registrations %}
+                    <tr>
+                      <td>{{ reg.course.code }}</td>
+                      <td>{{ reg.course.title }}</td>
+                      <td>{{ reg.course.credit_unit }}</td>
+                      <td>{{ reg.session }}</td>
+                      <td>{{ reg.semester }}</td>
+                      <td>
+                        <!-- <a href="{% url 'drop_course' reg.id %}" class="btn btn-sm btn-danger">
+                          Drop
+                        </a> -->
+                        <form method="POST" action="{% url 'drop_course' reg.id %}" style="display: inline;" onsubmit="return confirm('Are you sure you want to drop {{ reg.course.code }} - {{ reg.course.title }}?');">
+                          {% csrf_token %}
+                          <button type="submit" class="btn btn-danger btn-lg">Drop</button>
+                      </form>
+
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+              </table>
+              {% else %}
+              <p class="text-center text-muted">You have not registered any course yet.</p>
+              {% endif %}
+          </div>
+      </div>
   </div>
 </div>
+
+
 {% endblock %}

@@ -6,7 +6,7 @@ from accounts.models import CustomUser
 class AdminUser(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='admin_profile')
     role = models.CharField(max_length=50, choices=[
-        ('Super Admin', 'Super Admin'),
+        ('admin', 'Admin'),
         ('Academic Officer', 'Academic Officer'),
     ])
     can_approve_results = models.BooleanField(default=True)

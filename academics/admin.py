@@ -16,6 +16,7 @@ class DepartmentAdmin(admin.ModelAdmin):
 
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
-    list_display = ('code', 'title', 'credit_unit', 'department', 'assigned_lecturer')
+    list_display = ('code', 'title', 'credit_unit', 'course_type', 'department', 'pass_mark', 'offered_level', 'assigned_lecturer')
     list_filter = ('department',)
     search_fields = ('code', 'title')
+    filter_horizontal = ('prerequisites',)

@@ -8,6 +8,9 @@ class CustomUser(AbstractUser):
         ('admin', 'Admin'),
     ]
 
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = []
+
     role = models.CharField(max_length=20, choices=ROLE_CHOICES)
     is_active = models.BooleanField(default=True)
 

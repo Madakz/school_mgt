@@ -10,6 +10,12 @@ from .utils import calculate_grade
 from collections import defaultdict
 
 
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
+
+
+
 @login_required
 def student_dashboard(request):
     """Display all results grouped by session and semester, with GPA and CGPA."""
@@ -192,14 +198,17 @@ def student_view_results(request):
 @login_required
 def register_courses(request):
     student = get_object_or_404(Student, user=request.user)
-    available_courses = Course.objects.filter(department=student.department)
+
+    available_courses = Course.objects.filter(
+        department=student.department,
+        offered_level=student.level
+    )
 
     if request.method == 'POST':
         session = request.POST.get('session')
         semester = request.POST.get('semester')
         selected_courses = request.POST.getlist('courses')
 
-        # Validation
         if not session or not semester:
             messages.error(request, "Please select both session and semester.")
             return redirect('register_courses')
@@ -210,6 +219,23 @@ def register_courses(request):
 
         for course_id in selected_courses:
             course = get_object_or_404(Course, id=course_id)
+
+            # -------- PREREQUISITE CHECK --------
+            for prereq in course.prerequisites.all():
+                passed = Result.objects.filter(
+                    registration__student=student,
+                    registration__course=prereq,
+                    status='Approved',
+                    score__gte=prereq.pass_mark
+                ).exists()
+
+                if not passed:
+                    messages.error(
+                        request,
+                        f"{course.code} requires {prereq.code} (Pass mark: {prereq.pass_mark})."
+                    )
+                    return redirect('register_courses')
+
             CourseRegistration.objects.get_or_create(
                 student=student,
                 course=course,
@@ -217,13 +243,12 @@ def register_courses(request):
                 semester=semester
             )
 
-        messages.success(request, f"Courses registered successfully for {session} - {semester} Semester.")
+        messages.success(request, "Courses registered successfully.")
         return redirect('view_registered_courses')
 
-    context = {
-        'available_courses': available_courses,
-    }
-    return render(request, 'students/register_courses.html', context)
+    return render(request, 'students/register_courses.html', {
+        'available_courses': available_courses
+    })
 
 
 @login_required
@@ -233,24 +258,34 @@ def view_registered_courses(request):
     return render(request, 'students/view_registered_courses.html', {
         'registrations': registrations
     })
+    
 
 
 @login_required
 def drop_course(request, registration_id):
-    """Allows student to drop a course if results haven’t been submitted."""
+    """Allows student to drop a course if results haven't been submitted."""
     student = get_object_or_404(Student, user=request.user)
     registration = get_object_or_404(CourseRegistration, id=registration_id, student=student)
-
+    
     # Check if result has already been submitted for this course
     result_exists = Result.objects.filter(registration=registration).exists()
-
+    
     if result_exists:
         messages.error(request, "You cannot drop this course because a result has already been submitted.")
         return redirect('view_registered_courses')
-
-    if request.method == "POST":
-        registration.delete()
-        messages.success(request, f"You have successfully dropped {registration.course.code} - {registration.course.title}.")
+    
+    if registration.course.course_type == 'core':
+        messages.error(request, "Core courses cannot be dropped.")
         return redirect('view_registered_courses')
-
-    return render(request, 'students/confirm_drop.html', {'registration': registration})
+    
+    # Only accept POST requests for dropping
+    if request.method == "POST":
+        course_code = registration.course.code
+        course_title = registration.course.title
+        registration.delete()
+        messages.success(request, f"You have successfully dropped {course_code} - {course_title}.")
+        return redirect('view_registered_courses')
+    
+    # If someone tries to access via GET, redirect them back
+    messages.warning(request, "Invalid request method.")
+    return redirect('view_registered_courses')

@@ -34,9 +34,8 @@ class CourseRegistration(models.Model):
         return f"{self.student.matric_no} - {self.course.code} ({self.session})"
 
 
-# -----------------------------
+
 # RESULTS MODEL
-# -----------------------------
 class Result(models.Model):
     registration = models.OneToOneField(CourseRegistration, on_delete=models.CASCADE, related_name='result')
     score = models.DecimalField(max_digits=5, decimal_places=2)

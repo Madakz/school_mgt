@@ -1,11 +1,26 @@
 {% extends '../admin_base.html' %}
 {% block content %}
-<h2>Confirm Delete</h2>
-<p>Are you sure you want to delete <strong>{{ user.username }}</strong>?</p>
-<form method="POST">
-  {% csrf_token %}
-  <button type="submit">Yes, Delete</button>
-  <a href="{% url 'admin_list' %}">Cancel</a>
-</form>
+
+<div class="dashboard-content-one">
+  <!-- Add New Book Area Start Here -->
+  <div class="card height-auto">
+    <div class="card-body">
+      <div class="heading-layout1">
+          <div class="item-title">
+              <h3>Confirm Delete</h3>
+              <p>Are you sure you want to delete <strong>{{ user.username }}?</p>
+          </div>
+      </div>
+      <form method="post">
+        {% csrf_token %}
+
+        <div class="col-12 form-group mg-t-8">
+          <button type="submit" class="btn-fill-lg btn-gradient-yellow btn-hover-bluedark">Yes, delete</button>
+          <a href="{% url 'admin_list' %}"><button type="button" class="btn-fill-lg bg-blue-dark btn-hover-yellow">Cancel</button></a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 {% endblock %}
 

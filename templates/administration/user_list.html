@@ -23,4 +23,61 @@
   <tr><td colspan="4">No users found.</td></tr>
   {% endfor %}
 </table>
+
+
+<div class="dashboard-content-one">
+  <!-- Student Table Area Start Here -->
+  <div class="card height-auto">
+      <div class="card-body">
+          <div class="heading-layout1">
+              <div class="item-title">
+                  <h3>User List</h3>
+              </div>
+              
+          </div>
+          
+          <div class="col-1-xxxl col-xl-2 col-lg-3 col-12 form-group">
+            <button class="btn-fill-lg btn-gradient-yellow btn-hover-bluedark"><a href="{% url 'user_create' %}">Add User</a></button>
+          </div>
+          <div class="table-responsive">
+              <table class="table display data-table text-nowrap">
+                  <thead>
+                      <tr>
+                      <th>Username</th>
+                      <th>Email</th>
+                      <th>Role</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for user in users %}
+                      <tr>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.role }}</td>
+
+                        <td>
+                            <div class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                                    aria-expanded="false">
+                                    <span class="flaticon-more-button-of-three-dots"></span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a class="dropdown-item" href="{% url 'user_delete' user.id %}"><i
+                                            class="fas fa-times text-orange-red"></i>Delete</a>
+                                    <a class="dropdown-item" href="{% url 'user_update' user.id %}"><i
+                                            class="fas fa-cogs text-dark-pastel-green"></i>Edit</a>
+                                </div>
+                            </div>
+                        </td>
+                      </tr>
+                      {% empty %}
+                      <tr><td colspan="4">No users found.</td></tr>
+                      {% endfor %} 
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </div>
+</div>
 {% endblock %}

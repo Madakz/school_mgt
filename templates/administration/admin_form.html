@@ -14,22 +14,39 @@
                 {% csrf_token %}
                 <div class="row">
                     <div class="col-xl-6 col-lg-6 col-12 form-group">
-                        <fieldset>
-                            <legend>Account Info</legend>
-                            {{ user_form.as_p }}
-                        </fieldset>
+                        <label>Email <span class="text-danger">*</span></label>
+                        {{ user_form.email }}
                     </div>
                     <div class="col-xl-6 col-lg-6 col-12 form-group">
-                        <fieldset>
-                            <legend>Admin Details</legend>
-                            {{ admin_form.as_p }}
-                        </fieldset>
+                        <label>Username <span class="text-danger">*</span></label>
+                        {{ user_form.username }}
+                    </div>   
+                    <div class="col-xl-6 col-lg-6 col-12 form-group">
+                        <label>First Name <span class="text-danger">*</span></label>
+                        {{ user_form.first_name }}
                     </div>
-                    
-                    
-                    <div class="col-md-3 d-none d-xl-block form-group">
-                        
+                    <div class="col-xl-6 col-lg-6 col-12 form-group">
+                        <label>Last Name <span class="text-danger">*</span></label>
+                        {{ user_form.last_name }}
+                    </div> 
+                    <div class="col-xl-6 col-lg-6 col-12 form-group">
+                        <label>Role <span class="text-danger">*</span></label>
+                        {{ admin_form.role }}
+                    </div> 
+                    <div class="col-xl-6 col-lg-6 col-12 form-group">                        
+                        <input type="hidden" name="role_display" value="admin" readonly="readonly" class="form-control" id="id_role_display">
                     </div>
+                    <div class="col-xl-6 col-lg-6 col-12 form-group">
+                        <label>Can Aprrove Result? </label>
+                        {{ admin_form.can_approve_results }}
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-12 form-group">
+                        <label>Can Manage Users?</label>
+                        {{ admin_form.can_manage_users }}
+                    </div>  
+
+                     
+                    
                     <div class="col-12 form-group mg-t-8">
                         <button type="submit" class="btn-fill-lg btn-gradient-yellow btn-hover-bluedark">Save</button>
                         <a href="{% url 'admin_list' %}"><button type="button" class="btn-fill-lg bg-blue-dark btn-hover-yellow">Cancel</button></a>

@@ -6,6 +6,7 @@ from students.models import Student, Result
 from academics.models import Course
 
 class AdminUserForm(forms.ModelForm):
+    
     role_display = forms.CharField(
         label="User Type",
         initial="admin",
@@ -18,15 +19,24 @@ class AdminUserForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Optional: you can style or label your fields here
-        self.fields['role'].widget.attrs.update({'class': 'form-control'})
-        self.fields['can_approve_results'].widget.attrs.update({'class': 'form-check-input'})
-        self.fields['can_manage_users'].widget.attrs.update({'class': 'form-check-input'})
+
+        # Form styling
+        for name, field in self.fields.items():
+            field.widget.attrs.setdefault("class", "form-control")
+
+            
 
 class CustomUserForm(forms.ModelForm):
     class Meta:
         model = CustomUser
         fields = ['username', 'email', 'first_name', 'last_name']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Form styling
+        for name, field in self.fields.items():
+            field.widget.attrs.setdefault("class", "form-control")
 
 
 class LecturerForm(forms.ModelForm):
@@ -43,6 +53,15 @@ class LecturerForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         # Check if we're editing an existing Lecturer
         super().__init__(*args, **kwargs)
+
+        # add boostrap class
+        for field_name, field in self.fields.items():
+            # Default to form-control for most inputs
+            bootstrap_class = "form-control"
+            
+            # Set or append the class (use setdefault to avoid overwriting existing attrs)
+            field.widget.attrs.setdefault("class", bootstrap_class)
+
         if self.instance and self.instance.pk:
             self.fields['email'].initial = self.instance.user.email
             self.fields['username'].initial = self.instance.user.username
@@ -89,6 +108,13 @@ class StudentForm(forms.ModelForm):
     class Meta:
         model = Student
         fields = ['matric_no', 'department', 'level', 'admission_year']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Form styling
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({"class": "form-control"})
 
     def save(self, commit=True):
         student = super().save(commit=False)

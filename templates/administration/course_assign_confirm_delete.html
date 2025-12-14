@@ -1,10 +1,25 @@
 {% extends "admin_base.html" %}
 {% block content %}
-<h2>Unassign Lecturer</h2>
-<p>Are you sure you want to unassign the lecturer from "{{ course.title }}"?</p>
-<form method="POST">
-  {% csrf_token %}
-  <button type="submit">Confirm</button>
-  <a href="{% url 'course_assignment_list' %}">Cancel</a>
-</form>
+
+<div class="dashboard-content-one">
+  <!-- Add New Book Area Start Here -->
+  <div class="card height-auto">
+    <div class="card-body">
+      <div class="heading-layout1">
+          <div class="item-title">
+              <h3>Unassign Lecturer</h3>
+              <p>Are you sure you want to unassign the lecturer from "{{ course.title }}"?</p>
+          </div>
+      </div>
+      <form method="POST">
+        {% csrf_token %}
+
+        <div class="col-12 form-group mg-t-8">
+          <button type="submit" class="btn-fill-lg btn-gradient-yellow btn-hover-bluedark">Confirm</button>
+          <a href="{% url 'course_assignment_list' %}"><button type="button" class="btn-fill-lg bg-blue-dark btn-hover-yellow">Cancel</button></a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 {% endblock %}

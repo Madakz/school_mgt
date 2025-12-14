@@ -41,7 +41,7 @@ def lecturer_dashboard(request):
     approved_percent = (approved_results / total_results * 100) if total_results > 0 else 0
     pending_percent = (pending_results / total_results * 100) if total_results > 0 else 0
 
-    # ✅ Grade Distribution Count
+    # Grade Distribution Count
     grade_counts = lecturer_results.values('grade').annotate(total=Count('grade'))
 
     grade_map = {'A': 0, 'B': 0, 'C': 0, 'D': 0, 'E': 0, 'F': 0}
@@ -56,7 +56,7 @@ def lecturer_dashboard(request):
         'pending_results': pending_results,
         'approved_percent': round(approved_percent, 2),
         'pending_percent': round(pending_percent, 2),
-        'grades': grade_map,  # ✅ Pass grade data to template
+        'grades': grade_map,  # Pass grade data to template
     }
 
     return render(request, 'lecturers/dashboard.html', context)

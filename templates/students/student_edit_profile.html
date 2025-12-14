@@ -1,32 +1,45 @@
 {% extends "../student_base.html" %}
 {% block content %}
-<div class="container mt-5">
-  <div class="card shadow p-4">
-    <h3 class="text-primary mb-4">Edit My Profile</h3>
 
-    <form method="post">
-      {% csrf_token %}
-      <div class="mb-3">
-        <label for="id_first_name" class="form-label">First Name</label>
-        {{ form.first_name }}
-      </div>
-      <div class="mb-3">
-        <label for="id_last_name" class="form-label">Last Name</label>
-        {{ form.last_name }}
-      </div>
-      <div class="mb-3">
-        <label for="id_username" class="form-label">Username</label>
-        {{ form.username }}
-      </div>
-      <div class="mb-3">
-        <label for="id_password" class="form-label">New Password</label>
-        {{ form.password }}
-        <small class="text-muted d-block">Leave blank to keep current password</small>
-      </div>
+<div class="dashboard-content-one">
+    <!-- Add New Book Area Start Here -->
+    <div class="card height-auto">
+        <div class="card-body">
+            <div class="heading-layout1">
+                <div class="item-title">
+                    <h3>Edit my profile</h3>
+                </div>
+            </div>
+            <form class="new-added-form" method="POST">
+                {% csrf_token %}
+                <div class="row">  
+                    <div class="col-xl-6 col-lg-6 col-12 form-group">
+                        <label>First Name <span class="text-danger">*</span></label>
+                        {{ form.first_name }}
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-12 form-group">
+                        <label>Last Name <span class="text-danger">*</span></label>
+                        {{ form.last_name }}
+                    </div> 
+                    <div class="col-xl-6 col-lg-6 col-12 form-group">
+                        <label>Username <span class="text-danger">*</span></label>
+                        {{ form.username }}
+                    </div> 
+                    <div class="col-xl-6 col-lg-6 col-12 form-group">
+                        <label>Password <span class="text-danger">*</span></label>
+                        {{ form.password }}
+                         <small class="text-muted d-block">Leave blank to keep current password</small>
+                    </div>                     
 
-      <button type="submit" class="btn btn-success">Save Changes</button>
-      <a href="{% url 'student_profile' %}" class="btn btn-secondary">Cancel</a>
-    </form>
-  </div>
+                    <div class="col-12 form-group mg-t-8">
+                        <button type="submit" class="btn-fill-lg btn-gradient-yellow btn-hover-bluedark">Save</button>
+                        <a href="{% url 'student_profile' %}"><button type="button" class="btn-fill-lg bg-blue-dark btn-hover-yellow">Cancel</button></a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
+
+
 {% endblock %}
